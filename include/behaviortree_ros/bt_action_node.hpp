@@ -72,21 +72,27 @@ public:
   /// Method called when the Action makes a transition from IDLE to RUNNING.
   /// If it return false, the entire action is immediately aborted, it returns
   /// FAILURE and no request is sent to the server.
-  virtual bool sendGoal(GoalType& goal) = 0;
+  virtual bool checkGoal(GoalType& goal) = 0;
 
   /// Method (to be implemented by the user) to receive the reply.
   /// User can decide which NodeStatus it will return (SUCCESS or FAILURE).
-  virtual NodeStatus onResult( const ResultType& res) = 0;
+  virtual NodeStatus onResult( const ResultType& res)
+  {
+    setStatus(NodeStatus::SUCCESS);
+    return NodeStatus::SUCCESS;
+  }
 
   enum FailureCause{
     MISSING_SERVER = 0,
     ABORTED_BY_SERVER = 1,
-    REJECTED_BY_SERVER = 2
+    REJECTED_BY_SERVER = 2,
+    GOAL_LOST = 3
   };
 
   /// Called when a service call failed. Can be overriden by the user.
   virtual NodeStatus onFailedRequest(FailureCause failure)
   {
+    setStatus(NodeStatus::FAILURE);
     return NodeStatus::FAILURE;
   }
 
@@ -111,23 +117,25 @@ protected:
 
   BT::NodeStatus tick() override
   {
-    unsigned msec = getInput<unsigned>("timeout").value();
-    ros::Duration timeout(static_cast<double>(msec) * 1e-3);
-
-    bool connected = action_client_->waitForServer(timeout);
-    if( !connected ){
-      return onFailedRequest(MISSING_SERVER);
-    }
-
     // first step to be done only at the beginning of the Action
-    if (status() == BT::NodeStatus::IDLE) {
+    if (status() == NodeStatus::IDLE) {
+      unsigned msec = getInput<unsigned>("timeout").value();
+      ros::Duration timeout(static_cast<double>(msec) * 1e-3);
+
+      bool connected = action_client_->waitForServer(timeout);
+
+      if( !connected ){
+        return onFailedRequest(MISSING_SERVER);
+      }
+      
       // setting the status to RUNNING to notify the BT Loggers (if any)
-      setStatus(BT::NodeStatus::RUNNING);
+      setStatus(NodeStatus::RUNNING);
 
       GoalType goal;
-      bool valid_goal = sendGoal(goal);
+      bool valid_goal = checkGoal(goal);
       if( !valid_goal )
       {
+        setStatus(NodeStatus::FAILURE);
         return NodeStatus::FAILURE;
       }
       action_client_->sendGoal(goal);
@@ -138,27 +146,34 @@ protected:
 
     // Please refer to these states
 
-    if( action_state == actionlib::SimpleClientGoalState::PENDING ||
-        action_state == actionlib::SimpleClientGoalState::ACTIVE )
+    switch action_state
     {
-      return NodeStatus::RUNNING;
-    }
-    else if( action_state == actionlib::SimpleClientGoalState::SUCCEEDED)
-    {
-      return onResult( *action_client_->getResult() );
-    }
-    else if( action_state == actionlib::SimpleClientGoalState::ABORTED)
-    {
-      return onFailedRequest( ABORTED_BY_SERVER );
-    }
-    else if( action_state == actionlib::SimpleClientGoalState::REJECTED)
-    {
-      return onFailedRequest( REJECTED_BY_SERVER );
-    }
-    else
-    {
-      // FIXME: is there any other valid state we should consider?
-      throw std::logic_error("Unexpected state in RosActionNode::tick()");
+      case actionlib::SimpleClientGoalState::PENDING:
+      case actionlib::SimpleClientGoalState::ACTIVE :
+        return NodeStatus::RUNNING;
+        break;
+      
+      case actionlib::SimpleClientGoalState::SUCCEEDED:
+      case actionlib::SimpleClientGoalState::PREEMPTED:
+      case actionlib::SimpleClientGoalState::RECALLED:
+        return onResult( *action_client_->getResult() );
+        break;
+      
+      case actionlib::SimpleClientGoalState::ABORTED:
+        return onFailedRequest( ABORTED_BY_SERVER );
+        break;
+      
+      case actionlib::SimpleClientGoalState::REJECTED:
+        return onFailedRequest( REJECTED_BY_SERVER );
+        break;
+
+      case actionlib::SimpleClientGoalState::LOST:
+        return onFailedRequest( GOAL_LOST );
+        break;
+      
+      default:
+        // FIXME: is there any other valid state we should consider?
+        throw std::logic_error("Unexpected state in RosActionNode::tick()");
     }
   }
 };

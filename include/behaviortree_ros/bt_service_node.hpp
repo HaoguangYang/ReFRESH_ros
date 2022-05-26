@@ -61,7 +61,10 @@ public:
 
   /// Method (to be implemented by the user) to receive the reply.
   /// User can decide which NodeStatus it will return (SUCCESS or FAILURE).
-  virtual NodeStatus onResponse( const ResponseType& rep) = 0;
+  virtual NodeStatus onResponse( const ResponseType& rep)
+  {
+    return NodeStatus::SUCCESS;
+  }
 
   enum FailureCause{
     MISSING_SERVER = 0,
