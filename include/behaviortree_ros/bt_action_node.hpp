@@ -142,11 +142,11 @@ protected:
     }
 
     // RUNNING
-    auto action_state = action_client_->getState();
+    actionlib::SimpleClientGoalState action_state = action_client_->getState();
 
     // Please refer to these states
 
-    switch action_state
+    switch (action_state.state_)
     {
       case actionlib::SimpleClientGoalState::PENDING:
       case actionlib::SimpleClientGoalState::ACTIVE :
@@ -172,7 +172,6 @@ protected:
         break;
       
       default:
-        // FIXME: is there any other valid state we should consider?
         throw std::logic_error("Unexpected state in RosActionNode::tick()");
     }
   }

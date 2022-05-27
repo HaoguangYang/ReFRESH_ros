@@ -1,5 +1,5 @@
-#include <behaviortree_ros/bt_service_node.h>
-#include <behaviortree_ros/bt_action_node.h>
+#include <behaviortree_ros/bt_service_node.hpp>
+#include <behaviortree_ros/bt_action_node.hpp>
 #include <ros/ros.h>
 #include <behaviortree_ros/AddTwoInts.h>
 #include <behaviortree_ros/FibonacciAction.h>
@@ -104,7 +104,7 @@ RosActionNode<behaviortree_ros::FibonacciAction>(handle, name, conf) {}
       OutputPort<int>("result") };
   }
 
-  bool sendGoal(GoalType& goal) override
+  bool checkGoal(GoalType& goal) override
   {
     if( !getInput<int>("order", goal.order) )
     {
