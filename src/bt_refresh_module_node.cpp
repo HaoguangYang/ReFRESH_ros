@@ -1,4 +1,4 @@
-#include "behavior_tree_ros/bt_refresh_module_node.hpp"
+#include "ReFrESH_ros/bt_refresh_module_node.hpp"
 
 namespace BT
 {
@@ -15,7 +15,7 @@ namespace BT
         // Stop EV
         ControlNode::haltChild(1);
         // Stop ES
-        ControlNode::haltChind(2);
+        ControlNode::haltChild(2);
         initialEV_ = false;
         asyncEV_ = false;
         setStatus(NodeStatus::IDLE);
@@ -63,7 +63,7 @@ namespace BT
         // Third, run EX.
         // Only when EX and EV both returned SUCCESS will the active module return SUCCESS.
         // Otherwise, it returns FAILURE.
-        BT::NodeStatus EXstatus = children_nodes[0]->executeTick();
+        BT::NodeStatus EXstatus = children_nodes_[0]->executeTick();
         switch (EXstatus)
         {
             case NodeStatus::SUCCESS:
@@ -111,14 +111,5 @@ namespace BT
                 throw LogicError("A child node must never return IDLE");
                 break;
         }
-    }
-
-    BT::PortsList ReFrESH_Module::providedPorts()
-    {
-        return {
-            std::string nodeName = name();
-            BT::InputPort<std::string>(nodeName.append("Input")),
-            BT::OutputPort<std::string>(nodeName.append("States"));
-        };
     }
 }

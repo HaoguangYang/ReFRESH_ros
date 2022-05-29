@@ -1,8 +1,8 @@
 #ifndef BT_REFRESH_ROS_ACTION_NODE_HPP
 #define BT_REFRESH_ROS_ACTION_NODE_HPP
 
-#include "bt_action_node.hpp"
-#include "bt_service_node.hpp"
+#include "behaviortree_ros/bt_action_node.hpp"
+#include "behaviortree_ros/bt_service_node.hpp"
 
 namespace BT
 {
