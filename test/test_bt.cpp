@@ -1,8 +1,8 @@
 #include <behaviortree_ros/bt_service_node.hpp>
 #include <behaviortree_ros/bt_action_node.hpp>
 #include <ros/ros.h>
-#include <behaviortree_ros/AddTwoInts.h>
-#include <behaviortree_ros/FibonacciAction.h>
+#include <refresh_ros/AddTwoInts.h>
+#include <refresh_ros/FibonacciAction.h>
 
 using namespace BT;
 
@@ -38,12 +38,12 @@ public:
 // http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
 //-------------------------------------------------------------
 
-class AddTwoIntsAction: public RosServiceNode<behaviortree_ros::AddTwoInts>
+class AddTwoIntsAction: public RosServiceNode<refresh_ros::AddTwoInts>
 {
 
 public:
   AddTwoIntsAction( ros::NodeHandle& handle, const std::string& node_name, const NodeConfiguration & conf):
-  RosServiceNode<behaviortree_ros::AddTwoInts>(handle, node_name, conf) {}
+  RosServiceNode<refresh_ros::AddTwoInts>(handle, node_name, conf) {}
 
   static PortsList providedPorts()
   {
@@ -90,12 +90,12 @@ private:
 // http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
 //-------------------------------------------------------------
 
-class FibonacciServer: public RosActionNode<behaviortree_ros::FibonacciAction>
+class FibonacciServer: public RosActionNode<refresh_ros::FibonacciAction>
 {
 
 public:
   FibonacciServer( ros::NodeHandle& handle, const std::string& name, const NodeConfiguration & conf):
-RosActionNode<behaviortree_ros::FibonacciAction>(handle, name, conf) {}
+RosActionNode<refresh_ros::FibonacciAction>(handle, name, conf) {}
 
   static PortsList providedPorts()
   {
@@ -104,7 +104,7 @@ RosActionNode<behaviortree_ros::FibonacciAction>(handle, name, conf) {}
       OutputPort<int>("result") };
   }
 
-  bool checkGoal(GoalType& goal) override
+  bool sendGoal(GoalType& goal) override
   {
     if( !getInput<int>("order", goal.order) )
     {

@@ -54,6 +54,7 @@ public:
   using ActionType = ActionT;
   using GoalType   = typename ActionT::_action_goal_type::_goal_type;
   using ResultType = typename ActionT::_action_result_type::_result_type;
+  using FeedbackType = typename ActionT::_action_feedback_type::_feedback_type;
 
   RosActionNode() = delete;
 
@@ -66,13 +67,13 @@ public:
     return  {
       InputPort<std::string>("server_name", "name of the Action Server"),
       InputPort<unsigned>("timeout", 500, "timeout to connect (milliseconds)")
-      };
+    };
   }
 
   /// Method called when the Action makes a transition from IDLE to RUNNING.
   /// If it return false, the entire action is immediately aborted, it returns
   /// FAILURE and no request is sent to the server.
-  virtual bool checkGoal(GoalType& goal) = 0;
+  virtual bool sendGoal(GoalType& goal) = 0;
 
   /// Method (to be implemented by the user) to receive the reply.
   /// User can decide which NodeStatus it will return (SUCCESS or FAILURE).
@@ -81,6 +82,48 @@ public:
     setStatus(NodeStatus::SUCCESS);
     return NodeStatus::SUCCESS;
   }
+
+  /*
+  virtual void onFeedbackCb( const FeedbackType& fb ) {};
+
+  virtual void onResultCb( const actionlib::SimpleClientGoalState& state,
+                          const ResultType& result )
+  {
+    switch (state.state_)
+    {
+      case actionlib::SimpleClientGoalState::SUCCEEDED:
+      case actionlib::SimpleClientGoalState::PREEMPTED:
+      case actionlib::SimpleClientGoalState::RECALLED:
+        setStatus(onResult(action_client_->getResult()));
+        break;
+      
+      case actionlib::SimpleClientGoalState::ABORTED:
+        setStatus(onFailedRequest( ABORTED_BY_SERVER ));
+        break;
+      
+      case actionlib::SimpleClientGoalState::REJECTED:
+        setStatus(onFailedRequest( REJECTED_BY_SERVER ));
+        break;
+
+      case actionlib::SimpleClientGoalState::LOST:
+        setStatus(onFailedRequest( GOAL_LOST ));
+        break;
+      
+      default:
+        throw std::logic_error("Unexpected state in RosActionNode::tick()");
+        break;
+    }
+  }
+
+  virtual void onActiveCb()
+  {
+    setStatus(NodeStatus::RUNNING);
+  }
+
+  static void (* onResultCb)(const actionlib::SimpleClientGoalState&, const ResultType&);
+  static void (* onActiveCb)(void);
+  static void (* onFeedbackCb)(const FeedbackType&);
+  */
 
   enum FailureCause{
     MISSING_SERVER = 0,
@@ -122,58 +165,60 @@ protected:
       unsigned msec = getInput<unsigned>("timeout").value();
       ros::Duration timeout(static_cast<double>(msec) * 1e-3);
 
-      bool connected = action_client_->waitForServer(timeout);
-
+      bool connected = action_client_->isServerConnected();
       if( !connected ){
-        return onFailedRequest(MISSING_SERVER);
+        connected = action_client_->waitForServer(timeout);
+        if( !connected )
+          return onFailedRequest(MISSING_SERVER);
       }
       
       // setting the status to RUNNING to notify the BT Loggers (if any)
       setStatus(NodeStatus::RUNNING);
 
       GoalType goal;
-      bool valid_goal = checkGoal(goal);
+      bool valid_goal = sendGoal(goal);
       if( !valid_goal )
       {
         setStatus(NodeStatus::FAILURE);
         return NodeStatus::FAILURE;
       }
-      action_client_->sendGoal(goal);
+      action_client_->sendGoal(goal);//, RosActionNode<ActionType>::_resCb, RosActionNode<ActionType>::_actCb, RosActionNode<ActionType>::_fbCb);
     }
 
     // RUNNING
     actionlib::SimpleClientGoalState action_state = action_client_->getState();
 
     // Please refer to these states
-
     switch (action_state.state_)
     {
       case actionlib::SimpleClientGoalState::PENDING:
-      case actionlib::SimpleClientGoalState::ACTIVE :
-        return NodeStatus::RUNNING;
+      case actionlib::SimpleClientGoalState::ACTIVE:
         break;
-      
+
       case actionlib::SimpleClientGoalState::SUCCEEDED:
       case actionlib::SimpleClientGoalState::PREEMPTED:
       case actionlib::SimpleClientGoalState::RECALLED:
-        return onResult( *action_client_->getResult() );
+        setStatus(onResult(*action_client_->getResult()));
         break;
       
       case actionlib::SimpleClientGoalState::ABORTED:
-        return onFailedRequest( ABORTED_BY_SERVER );
+        setStatus(onFailedRequest( ABORTED_BY_SERVER ));
         break;
       
       case actionlib::SimpleClientGoalState::REJECTED:
-        return onFailedRequest( REJECTED_BY_SERVER );
+        setStatus(onFailedRequest( REJECTED_BY_SERVER ));
         break;
 
       case actionlib::SimpleClientGoalState::LOST:
-        return onFailedRequest( GOAL_LOST );
+        setStatus(onFailedRequest( GOAL_LOST ));
         break;
       
       default:
         throw std::logic_error("Unexpected state in RosActionNode::tick()");
+        break;
     }
+    
+    return status();
   }
 };
 

@@ -1,14 +1,14 @@
-#include "ReFrESH_ros/bt_refresh_module_node.hpp"
+#include "refresh_ros/bt_refresh_module_node.hpp"
 
 namespace BT
 {
-    ReFrESH_Module::ReFrESH_Module(const std::string& name):
+    ReFRESH_Module::ReFRESH_Module(const std::string& name):
         ControlNode::ControlNode(name, {}), asyncEV_(false), initialEV_(false)
     {
-        setRegistrationID("ReFrESH_Module");
+        setRegistrationID("ReFRESH_Module");
     }
 
-    void ReFrESH_Module::halt()
+    void ReFRESH_Module::halt()
     {
         // Stop EX
         ControlNode::haltChild(0);
@@ -21,7 +21,7 @@ namespace BT
         setStatus(NodeStatus::IDLE);
     }
 
-    BT::NodeStatus ReFrESH_Module::tick()
+    BT::NodeStatus ReFRESH_Module::tick()
     {
         // First, run ES to determine if the EX is feasible
         if (status() == NodeStatus::IDLE)

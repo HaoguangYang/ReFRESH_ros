@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5.1) # version on Ubuntu Trusty
-project(behaviortree_ros)
+project(refresh_ros)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -25,16 +25,20 @@ add_message_files(
   StatusChange.msg
   StatusChangeLog.msg
   TreeNode.msg
+  ModuleEvaluate.msg
 )
 
 add_service_files(
    FILES
    AddTwoInts.srv
+   ModuleEstimate.srv
  )
 
 add_action_files(
    DIRECTORY action
-   FILES     Fibonacci.action
+   FILES
+   Fibonacci.action
+   HighLevelRequest.action
 )
 
 generate_messages(
@@ -49,7 +53,7 @@ catkin_package(
     CATKIN_DEPENDS ${ROS_DEPENDENCIES}
 )
 
-include_directories( include ${catkin_INCLUDE_DIRS})
+include_directories( include ${catkin_INCLUDE_DIRS} )
 
 ######################################################
 # LIBRARIES

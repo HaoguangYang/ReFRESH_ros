@@ -1,15 +1,23 @@
 <package>
-  <name>behaviortree_ros</name>
+  <name>refresh_ros</name>
   <version>0.0.1</version>
   <description>
-  This package provides usefull utilities on top of BehaviorTree.CPP.
+  Based on BehaviorTree.CPP and Actionlib, this ROS package extends the run-time
+  self-adaptation capability of ROS. The framework of ReFrESH is referred to
+  (Cui et. al, 2015), where a Evaluator and Estimator are added to the functional
+  component (Executor) to achieve run-time self-awareness. A decider reconfigures
+  the system on-the-fly based on the EV and ES outputs. This package further
+  extends the work of ReFRESH by decoupling behavior and logic concerns. Hence,
+  it consists of High-Level (behavior) adaptation modules powered by a behavior
+  tree, and Low-Level (component and logic) adaptation modules integrated with
+  the native ROS API.
   </description>
 
-  <maintainer email="davide.faconti@eurecat.org">Davide Faconti</maintainer>
+  <maintainer email="yang1510@purdue.edu">Haoguang Yang</maintainer>
 
   <license>MIT</license>
 
-  <author>Davide Faconti</author>
+  <author>Haoguang Yang</author>
 
   <build_depend>roscpp</build_depend>
   <build_depend>std_msgs</build_depend>

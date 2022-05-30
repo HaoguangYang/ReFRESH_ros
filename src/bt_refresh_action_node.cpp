@@ -1,108 +1,18 @@
-#include "behavior_tree_ros/bt_refresh_module_node.hpp"
+#include "refresh_ros/bt_refresh_ros_action_node.hpp"
 
 namespace BT
 {
-    ReFrESH_Module::ReFrESH_Module(const std::string& name):
-        ControlNode::ControlNode(name, {}), asyncEV_(false), initialEV_(false)
-    {
-        setRegistrationID("ReFrESH_Module");
-    }
-
-    void ReFrESH_Module::halt()
-    {
-        // Stop EX
-        ControlNode::haltChild(0);
-        // Stop EV
-        ControlNode::haltChild(1);
-        // Stop ES
-        ControlNode::haltChind(2);
-        initialEV_ = false;
-        asyncEV_ = false;
-        setStatus(NodeStatus::IDLE);
-    }
-
-    BT::NodeStatus ReFrESH_Module::tick()
-    {
-        // First, run ES to determine if the EX is feasible
-        if (status() == NodeStatus::IDLE)
+    bool ReFRESH_ROS_EX_action::sendGoal(GoalType& goal){
+        if( !getInput<std::string>("action_request", goal.action_request) )
         {
-            BT::NodeStatus ESstatus = estimate();
-            if (ESstatus != NodeStatus::SUCCESS)
-            {
-                if (ESstatus == NodeStatus::IDLE)
-                    throw LogicError("A child node must never return IDLE");
-                setStatus(NodeStatus::FAILURE);
-                if (children_nodes_.size()>=3)
-                    ControlNode::haltChild(2);
-                return NodeStatus::FAILURE;
-            }
-            // ES -> SUCCESS: EX is feasible
-            setStatus(NodeStatus::RUNNING);
-            initialEV_ = true;
-            return NodeStatus::RUNNING;
+            // abourt the entire action. Result in a FAILURE
+            return false;
         }
-
-        // Second, run EV to determine if the goal of EX is already reached
-        if (initialEV_)
+        if( !getInput<std::string>("arguments", goal.arguments) )
         {
-            BT::NodeStatus EVstatus = evaluate();
-            // Goal is already reached, no need to run EX.
-            if (EVstatus == NodeStatus::SUCCESS)
-            {
-                setStatus(NodeStatus::SUCCESS);
-                return NodeStatus::SUCCESS;
-            }
-            if (EVstatus == NodeStatus::IDLE)
-                throw LogicError("A child node must never return IDLE");
-            // If EV returned running, it is an async node, need to tick every period
-            asyncEV_ = (EVstatus == NodeStatus::RUNNING);
-            initialEV_ = false;
-            return NodeStatus::RUNNING;
+            // abourt the entire action. Result in a FAILURE
+            return false;
         }
-
-        // Third, run EX.
-        BT::NodeStatus EXstatus = children_nodes[0]->executeTick();
-        // EX terminal state and reported successful.
-        if (EXstatus == NodeStatus::SUCCESS)
-        {
-            // Is it really a satisfactory result? If not, override with failure state
-            if (evaluate() != NodeStatus::SUCCESS)
-            {
-                setStatus(NodeStatus::FAILURE);
-                if (children_nodes_.size()>=2)
-                    ControlNode::haltChild(1);
-                return NodeStatus::FAILURE;
-            }
-        }
-
-        /**
-         * @brief If EV is asynchronous, tick it every cycle as we do with EX.
-         * Limitation: EV should reach a SUCCESS state within one tick after EX completes,
-         * as previously shown. The asyncEV_ implementation only guarantees #ticks_EV = #ticks_EX+1,
-         * including the initial tick.
-         */
-        if (asyncEV_)
-        {
-            // EV signals SUCCESS ahead of EX. exit here.
-            if (evaluate() == NodeStatus::SUCCESS)
-            {
-                setStatus(NodeStatus::SUCCESS);
-                ControlNode::haltChild(0);
-                return NodeStatus::SUCCESS;
-            }
-        }
-        if (EXstatus == NodeStatus::IDLE)
-            throw LogicError("A child node must never return IDLE");
-        setStatus(EXstatus);
-        return EXstatus;
-    }
-
-    BT::PortsList ReFrESH_Module::providedPorts()
-    {
-        return {
-            std::string nodeName = name();
-            BT::InputPort<std::string>(nodeName.append("Input")),
-            BT::OutputPort<std::string>(nodeName.append("States"));
-        };
+        return true;
     }
 }

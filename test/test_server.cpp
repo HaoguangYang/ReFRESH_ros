@@ -1,10 +1,10 @@
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h>
-#include <behaviortree_ros/AddTwoInts.h>
-#include <behaviortree_ros/FibonacciAction.h>
+#include <refresh_ros/AddTwoInts.h>
+#include <refresh_ros/FibonacciAction.h>
 
-bool Add(behaviortree_ros::AddTwoInts::Request  &req,
-         behaviortree_ros::AddTwoInts::Response &res)
+bool Add(refresh_ros::AddTwoInts::Request  &req,
+         refresh_ros::AddTwoInts::Response &res)
 {
   res.sum = req.a + req.b;
   ROS_INFO("request: x=%d, y=%d", req.a, req.b);
@@ -21,11 +21,11 @@ protected:
 
   ros::NodeHandle nh_;
   // NodeHandle instance must be created before this line. Otherwise strange error occurs.
-  actionlib::SimpleActionServer<behaviortree_ros::FibonacciAction> server_;
+  actionlib::SimpleActionServer<refresh_ros::FibonacciAction> server_;
   std::string action_name_;
   // create messages that are used to published feedback/result
-  behaviortree_ros::FibonacciFeedback feedback_;
-  behaviortree_ros::FibonacciResult result_;
+  refresh_ros::FibonacciFeedback feedback_;
+  refresh_ros::FibonacciResult result_;
 
   int call_number_;
 
@@ -43,7 +43,7 @@ public:
   {
   }
 
-  void executeCB(const behaviortree_ros::FibonacciGoalConstPtr &goal)
+  void executeCB(const refresh_ros::FibonacciGoalConstPtr &goal)
   {
     // calculate the result
     // push_back the seeds for the fibonacci sequence

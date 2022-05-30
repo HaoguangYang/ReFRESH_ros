@@ -6,13 +6,13 @@
 
 namespace BT
 {
-    class ReFrESH_Module : public ControlNode
+    class ReFRESH_Module : public ControlNode
     {
         public:
 
-            ReFrESH_Module(const std::string& name);
+            ReFRESH_Module(const std::string& name);
 
-            virtual ~ReFrESH_Module() override = default;
+            virtual ~ReFRESH_Module() override = default;
 
             virtual void halt() override;
 
@@ -62,14 +62,11 @@ namespace BT
                 if (children_count >= 2)
                 {
                     BT::NodeStatus EVstatus = children_nodes_[1]->executeTick();
-                    Optional<float> pmsg = getInput<float>("PerformanceCost");
-                    if (!pmsg)
+                    BT::Result pmsg, rmsg;
+                    if ( ! (pmsg = getInput<float>("PerformanceCost", pCost_)) )
                         throw BT::RuntimeError("EV missing required input [message]: ", pmsg.error());
-                    pCost_ = pmsg.value();
-                    Optional<float> rmsg = getInput<float>("ResourceCost");
-                    if (!rmsg)
+                    if ( ! (rmsg = getInput<float>("ResourceCost", rCost_)) )
                         throw BT::RuntimeError("EV missing required input [message]: ", rmsg.error());
-                    rCost_ = rmsg.value();
                     return EVstatus;
                 }
                 if (children_count == 1)
@@ -80,7 +77,8 @@ namespace BT
                         return NodeStatus::SUCCESS;
                     }
                 }
-                setFailure_();
+                if (!initialEV_)
+                    setFailure_();
                 return NodeStatus::FAILURE;
             }
 
@@ -90,14 +88,11 @@ namespace BT
                 if (children_count >= 3)
                 {
                     BT::NodeStatus ESstatus = children_nodes_[2]->executeTick();
-                    Optional<float> pmsg = getInput<float>("PerformanceCost");
-                    if (!pmsg)
+                    BT::Result pmsg, rmsg;
+                    if ( ! (pmsg = getInput<float>("PerformanceCost", pCost_)) )
                         throw BT::RuntimeError("ES missing required input [message]: ", pmsg.error());
-                    pCost_ = pmsg.value();
-                    Optional<float> rmsg = getInput<float>("ResourceCost");
-                    if (!rmsg)
+                    if ( ! (rmsg = getInput<float>("ResourceCost", rCost_)) )
                         throw BT::RuntimeError("ES missing required input [message]: ", rmsg.error());
-                    rCost_ = rmsg.value();
                     return ESstatus;
                 }
                 setSuccess_();
