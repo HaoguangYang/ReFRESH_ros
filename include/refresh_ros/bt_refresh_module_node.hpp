@@ -19,8 +19,8 @@ namespace BT
             static BT::PortsList providedPorts()
             {
                 return {
-                    BT::InputPort<float>("PerformanceCost"),
-                    BT::InputPort<float>("ResourceCost")
+                    BT::InputPort<float>("performance_cost"),
+                    BT::InputPort<float>("resource_cost")
                 };
             }
 
@@ -63,10 +63,10 @@ namespace BT
                 {
                     BT::NodeStatus EVstatus = children_nodes_[1]->executeTick();
                     BT::Result pmsg, rmsg;
-                    if ( ! (pmsg = getInput<float>("PerformanceCost", pCost_)) )
-                        throw BT::RuntimeError("EV missing required input [message]: ", pmsg.error());
+                    if ( ! (pmsg = getInput<float>("performance_cost", pCost_)) )
+                        throw BT::RuntimeError("EV missing required input [performance_cost]: ", pmsg.error());
                     if ( ! (rmsg = getInput<float>("ResourceCost", rCost_)) )
-                        throw BT::RuntimeError("EV missing required input [message]: ", rmsg.error());
+                        throw BT::RuntimeError("EV missing required input [resource_cost]: ", rmsg.error());
                     return EVstatus;
                 }
                 if (children_count == 1)
@@ -89,10 +89,10 @@ namespace BT
                 {
                     BT::NodeStatus ESstatus = children_nodes_[2]->executeTick();
                     BT::Result pmsg, rmsg;
-                    if ( ! (pmsg = getInput<float>("PerformanceCost", pCost_)) )
-                        throw BT::RuntimeError("ES missing required input [message]: ", pmsg.error());
-                    if ( ! (rmsg = getInput<float>("ResourceCost", rCost_)) )
-                        throw BT::RuntimeError("ES missing required input [message]: ", rmsg.error());
+                    if ( ! (pmsg = getInput<float>("performance_cost", pCost_)) )
+                        throw BT::RuntimeError("ES missing required input [performance_cost]: ", pmsg.error());
+                    if ( ! (rmsg = getInput<float>("resource_cost", rCost_)) )
+                        throw BT::RuntimeError("ES missing required input [resource_cost]: ", rmsg.error());
                     return ESstatus;
                 }
                 setSuccess_();

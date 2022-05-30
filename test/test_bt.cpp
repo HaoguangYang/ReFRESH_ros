@@ -120,7 +120,7 @@ RosActionNode<refresh_ros::FibonacciAction>(handle, name, conf) {}
   {
     ROS_INFO("FibonacciAction: result received");
     int fibonacci_result = 0;
-    for( int n: res.sequence)
+    for( int n: res->sequence)
     {
       fibonacci_result += n;
     }

@@ -12,12 +12,12 @@ namespace BT
  * Base Action to implement a ROS Subscriber
  */
 template<class MessageT>
-class RosSyncSubscriberNode : public BT::StatefulActionNode
+class RosSubscriberNode : public BT::StatefulActionNode
 {
 protected:
 
   RosSubscriberNode(ros::NodeHandle& nh, const std::string& name, const BT::NodeConfiguration & conf):
-   BT::SyncActionNode(name, conf), node_(nh) { }
+   BT::StatefulActionNode(name, conf), node_(nh) { }
 
 public:
 
@@ -33,29 +33,25 @@ public:
   static PortsList providedPorts()
   {
     return  {
-      InputPort<std::string>("topic_name", "name of the ROS topic")
+      InputPort<std::string>("topic_name", "name of the ROS topic"),
+      InputPort<unsigned>("buffer_length", 10, "length of message buffer")
     };
   }
-
-  /// Method (to be implemented by the user) to receive the message.
-  virtual void msgCb( const MessageType& msg ) = 0;
-  /*{
-    lastMsg_ = *msg;
-  }*/
 
   /// Methods to be implemented by the user
   virtual bool isExitCondition() = 0;
   virtual bool isFailure() = 0;
 
-  static void _msgCb( const MessageType& msg )
-  {
-    RosSyncSubscriberNode<MessageType>::msgCb(msg);
-  }
+  inline void onMessageCb( const MessageType::ConstPtr& msg ){ lastMsgPtr_ = msg; }
 
   NodeStatus onStart() override
   {
-    sub_ = node_.subscribe(getInput("topic_name"), 10,
-              boost::bind(&RosSyncSubscriberNode<MessageType>::_msgCb, this, _1));
+    BT::Result inRes;
+    std::string topic_name;
+    if ( !(inRes = getInput<std::string>("topic_name", topic_name)))
+        throw(BT::RuntimeError("ROS Action Node missing required input [topic_name]: ", inRes.error()));
+    sub_ = node_.subscribe(topic_name, getInput<unsigned>("topic_name").value(),
+              boost::bind(&RosSubscriberNode<MessageType>::onMessageCb, this, _1));
   }
 
   NodeStatus onRunning() override
@@ -77,7 +73,7 @@ public:
 
 protected:
 
-  //MessageType lastMsg_;
+  MessageType::ConstPtr lastMsgPtr_;
 
   // The node that will be used for any ROS operations
   ros::NodeHandle& node_;
@@ -102,7 +98,7 @@ template <class DerivedT> static
   manifest.type = getType<DerivedT>();
   manifest.ports = DerivedT::providedPorts();
   manifest.registration_ID = registration_ID;
-  const auto& basic_ports = RosServiceNode< typename DerivedT::ServiceType>::providedPorts();
+  const auto& basic_ports = RosSubscriberNode< typename DerivedT::MessageType>::providedPorts();
   manifest.ports.insert( basic_ports.begin(), basic_ports.end() );
 
   factory.registerBuilder( manifest, builder );
