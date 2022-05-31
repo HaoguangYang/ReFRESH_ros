@@ -60,9 +60,13 @@ include_directories( include ${catkin_INCLUDE_DIRS} )
 
 #header only for the time being
 
-add_library(ReFrESHmoduleNode src/bt_refresh_module_node.cpp)
-add_dependencies(ReFrESHmoduleNode ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(ReFrESHmoduleNode ${catkin_LIBRARIES})
+add_library(ReFRESHmoduleNode src/bt_refresh_module_node.cpp)
+add_dependencies(ReFRESHmoduleNode ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(ReFRESHmoduleNode ${catkin_LIBRARIES})
+
+add_library(ReFRESHactionNode src/bt_refresh_ros_action_node.cpp)
+add_dependencies(ReFRESHactionNode ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(ReFRESHactionNode ${catkin_LIBRARIES})
 
 ######################################################
 # TESTS

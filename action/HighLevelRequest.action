@@ -1,7 +1,7 @@
-std_msgs/String action_request
-std_msgs/String arguments
+string action_request
+string arguments
 ---
-std_msgs/String explanation
+string explanation
 ---
 ModuleEvaluate  evaluate
-std_msgs/String explanation
+string explanation

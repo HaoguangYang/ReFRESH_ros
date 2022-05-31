@@ -4,14 +4,15 @@
 #include "behaviortree_ros/bt_action_node.hpp"
 #include "behaviortree_ros/bt_service_node.hpp"
 #include "refresh_ros/HighLevelRequestAction.h"
+#include "refresh_ros/ModuleEstimate.h"
 
 namespace BT
 {
-    class ReFRESH_ROS_EX_action :  public RosActionNode<refresh_ros::HighLevelRequestAction>
+    class ReFRESH_ROS_EX_node :  public RosActionNode<refresh_ros::HighLevelRequestAction>
     {
         public:
 
-            ReFRESH_ROS_EX_action(
+            ReFRESH_ROS_EX_node(
                 ros::NodeHandle& handle,
                 const std::string& node_name,
                 const NodeConfiguration & conf) :
@@ -44,7 +45,7 @@ namespace BT
 
             ActionEvaluatorNode() = delete;
 
-            virtual ~RosActionNode() = default;
+            virtual ~ActionEvaluatorNode() = default;
 
             /// These ports will be added automatically if this Node is
             /// registered using RegisterReFRESH_EV<DeriveClass>()
@@ -74,13 +75,13 @@ namespace BT
             inline BT::NodeStatus onStart() override
             {
                 setStatus(NodeStatus::RUNNING);
-                spinOnceImpl();
+                return spinOnceImpl();
             }
 
             /// method invoked by an action in the RUNNING state.
             inline BT::NodeStatus onRunning() override
             {
-               spinOnceImpl();
+               return spinOnceImpl();
             }
         
         protected:
@@ -91,16 +92,7 @@ namespace BT
     class ReFRESH_ROS_EV_node : public ActionEvaluatorNode<refresh_ros::HighLevelRequestAction>
     {
         public:
-            virtual BT::NodeStatus spinOnce() override
-            {
-                pCost_ = fb_->evaluate.performanceCost;
-                rCost_ = fb_->evaluate.resourceCost;
-                if (pCost_ >= 1.0)
-                    return NodeStatus::RUNNING;
-                if (rCost_ >= 1.0)
-                    return NodeStatus::RUNNING;
-                return NodeStatus::SUCCESS
-            }
+            virtual BT::NodeStatus spinOnce() override;
     };
 
     class ReFrESH_ROS_ES_node : public RosServiceNode<refresh_ros::ModuleEstimate>
@@ -115,7 +107,9 @@ namespace BT
                     OutputPort<float>("resource_cost")
                 };
             }
-    }
+
+            virtual NodeStatus onResponse(const ResponseType& rep) override;
+    };
 
 }
 

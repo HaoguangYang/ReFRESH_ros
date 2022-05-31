@@ -41,6 +41,7 @@ public:
   using ServiceType  = ServiceT;
   using RequestType  = typename ServiceT::Request;
   using ResponseType = typename ServiceT::Response;
+  using ResponseTypePtr = typename ServiceT::Response::ConstPtr;
 
   RosServiceNode() = delete;
 
@@ -81,7 +82,7 @@ protected:
 
   ros::ServiceClient service_client_;
 
-  typename ServiceT::Response reply_;
+  ResponseType reply_;
 
   // The node that will be used for any ROS operations
   ros::NodeHandle& node_;
