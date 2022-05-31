@@ -116,7 +116,7 @@ RosActionNode<refresh_ros::FibonacciAction>(handle, name, conf) {}
     return true;
   }
 
-  NodeStatus onResult( const ResultType& res) override
+  NodeStatus onResult( const ResultTypePtr& res) override
   {
     ROS_INFO("FibonacciAction: result received");
     int fibonacci_result = 0;

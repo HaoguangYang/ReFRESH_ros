@@ -65,7 +65,7 @@ namespace BT
                     BT::Result pmsg, rmsg;
                     if ( ! (pmsg = getInput<float>("performance_cost", pCost_)) )
                         throw BT::RuntimeError("EV missing required input [performance_cost]: ", pmsg.error());
-                    if ( ! (rmsg = getInput<float>("ResourceCost", rCost_)) )
+                    if ( ! (rmsg = getInput<float>("resource_cost", rCost_)) )
                         throw BT::RuntimeError("EV missing required input [resource_cost]: ", rmsg.error());
                     return EVstatus;
                 }

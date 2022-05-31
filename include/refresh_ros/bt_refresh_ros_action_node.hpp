@@ -30,30 +30,93 @@ namespace BT
 
     };
 
-    class ReFRESH_ROS_EV_node :  public BT::StatefulActionNode
+    template<class ActionT>
+    class ActionEvaluatorNode : public BT::StatefulActionNode
     {
+        protected:
+            ActionEvaluatorNode(const std::string& name, const BT::NodeConfiguration& conf):
+                BT::StatefulActionNode(name, conf)
+            {}
+
         public:
+            using ActionType = ActionT;
+            using FeedbackType = typename ActionT::_action_feedback_type::_feedback_type::ConstPtr;
 
-            ReFRESH_ROS_EV_node(ros::NodeHandle& nh, const std::string& name, const BT::NodeConfiguration & conf):
-                BT::StatefulActionNode(name, conf), node_(nh) { }
+            ActionEvaluatorNode() = delete;
 
-            ReFRESH_ROS_EV_node() = delete;
+            virtual ~RosActionNode() = default;
 
-            virtual ~ReFRESH_ROS_EV_node() = default;
-
-            
-
+            /// These ports will be added automatically if this Node is
+            /// registered using RegisterReFRESH_EV<DeriveClass>()
             static PortsList providedPorts()
             {
                 return {
-                    InputPort<std::string>("action_request"),
-                    OutputPort<std::string>("arguments")
+                    InputPort<FeedbackType>("feedback"),
+                    OutputPort<float>("performance_cost"),
+                    OutputPort<float>("resource_cost")
                 };
             }
 
-            bool checkGoal(GoalType& goal) override;
+            virtual BT::NodeStatus spinOnce() = 0;
 
+            inline BT::NodeStatus spinOnceImpl()
+            {
+                BT::Result fbRes;
+                if ( !(fbRes = getInput<FeedbackType>("feedback", fb_)))
+                    throw(BT::RuntimeError("Action Evaluator Node missing required input [feedback]: ", fbRes.error()));
+                BT::NodeStatus status = spinOnce();
+                setOutput("performance_cost", pCost_);
+                setOutput("resource_cost", rCost_);
+                setStatus(status);
+                return status;
+            }
+
+            inline BT::NodeStatus onStart() override
+            {
+                setStatus(NodeStatus::RUNNING);
+                spinOnceImpl();
+            }
+
+            /// method invoked by an action in the RUNNING state.
+            inline BT::NodeStatus onRunning() override
+            {
+               spinOnceImpl();
+            }
+        
+        protected:
+            FeedbackType fb_;
+            float pCost_, rCost_;
     };
+
+    class ReFRESH_ROS_EV_node : public ActionEvaluatorNode<refresh_ros::HighLevelRequestAction>
+    {
+        public:
+            virtual BT::NodeStatus spinOnce() override
+            {
+                pCost_ = fb_->evaluate.performanceCost;
+                rCost_ = fb_->evaluate.resourceCost;
+                if (pCost_ >= 1.0)
+                    return NodeStatus::RUNNING;
+                if (rCost_ >= 1.0)
+                    return NodeStatus::RUNNING;
+                return NodeStatus::SUCCESS
+            }
+    };
+
+    class ReFrESH_ROS_ES_node : public RosServiceNode<refresh_ros::ModuleEstimate>
+    {
+        public:
+            /// These ports will be added automatically if this Node is
+            /// registered using RegisterReFRESH_EV<DeriveClass>()
+            static PortsList providedPorts()
+            {
+                return {
+                    OutputPort<float>("performance_cost"),
+                    OutputPort<float>("resource_cost")
+                };
+            }
+    }
+
 }
 
 #endif

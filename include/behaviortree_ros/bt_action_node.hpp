@@ -50,8 +50,10 @@ public:
   using ActionClientType = actionlib::SimpleActionClient<ActionT>;
   using ActionType = ActionT;
   using GoalType   = typename ActionT::_action_goal_type::_goal_type;
-  using ResultType = typename ActionT::_action_result_type::_result_type::ConstPtr;
-  using FeedbackType = typename ActionT::_action_feedback_type::_feedback_type::ConstPtr;
+  using ResultType = typename ActionT::_action_result_type::_result_type;
+  using ResultTypePtr = typename ActionT::_action_result_type::_result_type::ConstPtr;
+  using FeedbackType = typename ActionT::_action_feedback_type::_feedback_type;
+  using FeedbackTypePtr = typename ActionT::_action_feedback_type::_feedback_type::ConstPtr;
 
   RosActionNode() = delete;
 
@@ -64,7 +66,7 @@ public:
     return  {
       InputPort<std::string>("server_name", "name of the Action Server"),
       InputPort<unsigned>("timeout", 500, "timeout to connect (milliseconds)"),
-      OutputPort<FeedbackType>("feedback", "pointer to action feedback")
+      OutputPort<FeedbackTypePtr>("feedback", "pointer to action feedback")
     };
   }
 
@@ -73,11 +75,15 @@ public:
   /// FAILURE and no request is sent to the server.
   virtual bool sendGoal(GoalType& goal) = 0;
 
+  virtual FeedbackTypePtr resultToFeedback(const ResultTypePtr& res) { return NULL; }
+
   /// Method (to be implemented by the user) to receive the reply.
   /// User can decide which NodeStatus it will return (SUCCESS or FAILURE).
-  virtual NodeStatus onResult( const ResultType& res)
+  virtual NodeStatus onResult( const ResultTypePtr& res )
   {
     setStatus(NodeStatus::SUCCESS);
+    if (FeedbackTypePtr fb_res = resultToFeedback(res))
+      setOutput("feedback", fb_res);
     return NodeStatus::SUCCESS;
   }
 
@@ -108,7 +114,7 @@ public:
     setStatus(NodeStatus::IDLE);
   }
 
-  void onResultCb(const actionlib::SimpleClientGoalState& state, const ResultType& res)
+  void onResultCb(const actionlib::SimpleClientGoalState& state, const ResultTypePtr& res)
   {
     switch (state.state_)
     {
@@ -141,7 +147,7 @@ public:
 
   inline void onActiveCb(void){ setStatus(NodeStatus::RUNNING); }
   
-  inline void onFeedbackCb(const FeedbackType& fb){ setOutput("feedback", fb); }
+  inline void onFeedbackCb(const FeedbackTypePtr& fb){ setOutput("feedback", fb); }
 
 protected:
 

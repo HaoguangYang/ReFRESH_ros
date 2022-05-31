@@ -68,7 +68,8 @@ public:
 
   void onHalted() override
   {
-    sub_.unregister();
+    sub_.shutdown();
+    setStatus(NodeStatus::IDLE);
   }
 
 protected:
@@ -86,7 +87,7 @@ protected:
 /// Method to register the service into a factory.
 /// It gives you the opportunity to set the ros::NodeHandle.
 template <class DerivedT> static
-  void RegisterRosService(BT::BehaviorTreeFactory& factory,
+  void RegisterRosSubscriber(BT::BehaviorTreeFactory& factory,
                      const std::string& registration_ID,
                      ros::NodeHandle& node_handle)
 {
