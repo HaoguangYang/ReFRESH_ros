@@ -89,6 +89,26 @@ namespace BT
             float pCost_, rCost_;
     };
 
+    /// Method to register the evaluator into a factory.
+    /// It gives you the opportunity to set the ros::NodeHandle.
+    template <class DerivedT> static
+    void RegisterActionEvaluator(BT::BehaviorTreeFactory& factory,
+                        const std::string& registration_ID)
+    {
+        NodeBuilder builder = [](const std::string& name, const NodeConfiguration& config) {
+            return std::make_unique<DerivedT>( name, config );
+        };
+
+        TreeNodeManifest manifest;
+        manifest.type = getType<DerivedT>();
+        manifest.ports = DerivedT::providedPorts();
+        manifest.registration_ID = registration_ID;
+        const auto& basic_ports = ActionEvaluatorNode< typename DerivedT::ActionType>::providedPorts();
+        manifest.ports.insert( basic_ports.begin(), basic_ports.end() );
+
+        factory.registerBuilder( manifest, builder );
+    }
+
     class ReFRESH_ROS_EV_node : public ActionEvaluatorNode<refresh_ros::HighLevelRequestAction>
     {
         public:
