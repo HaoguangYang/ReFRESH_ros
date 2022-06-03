@@ -68,7 +68,7 @@ add_library(ReFRESHactionNode src/bt_refresh_ros_action_node.cpp)
 add_dependencies(ReFRESHactionNode ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(ReFRESHactionNode ${catkin_LIBRARIES})
 
-add_library(ReFRESHdeciderNode src/bt_refresh_ros_decider_node.cpp)
+add_library(ReFRESHdeciderNode src/bt_refresh_decider_node.cpp)
 add_dependencies(ReFRESHdeciderNode ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(ReFRESHdeciderNode ${catkin_LIBRARIES})
 

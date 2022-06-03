@@ -1,18 +1,18 @@
-#ifndef BT_REFRESH_MODULE_NODE_HPP
-#define BT_REFRESH_MODULE_NODE_HPP
+#ifndef BT_REFRESH_DECIDER_NODE_HPP
+#define BT_REFRESH_DECIDER_NODE_HPP
 
 #include <float.h>
 #include "behaviortree_cpp_v3/control_node.h"
 #include "refresh_ros/ModuleEvaluate.h"
+#include "refresh_ros/bt_refresh_module_node.hpp"
 
 namespace BT
 {
-    class ReFRESH_Cost : public ModuleEvaluate
+    class ReFRESH_Cost : public refresh_ros::ModuleEvaluate
     {
         public:
-            float weightedCost;
 
-            ReFRESH_Cost(const ModuleEvaluate::ConstPtr& msg);
+            ReFRESH_Cost(const refresh_ros::ModuleEvaluate::ConstPtr& msg);
 
             inline void setPerformanceWeight(float& pWeight)
             {
@@ -26,7 +26,7 @@ namespace BT
                 rWeight_ = rWeight;
             }
 
-            inline void updateWeightedCost()
+            inline void updateWeightedCost() const
             {
                 if (costUpdated_)
                     return;
@@ -41,10 +41,12 @@ namespace BT
                 updateWeightedCost();
             }
 
+            mutable float weightedCost;
+
         private:
-            bool costUpdated_;
+            mutable bool costUpdated_;
             float pWeight_, rWeight_;
-    }
+    };
 
     bool operator<(const ReFRESH_Cost& lhs, const ReFRESH_Cost& rhs)
     {
@@ -72,6 +74,10 @@ namespace BT
             }
 
         private:
+
+            int indActive_;
+            
+            std::vector<ReFRESH_Cost> moduleCost_;
 
             virtual BT::NodeStatus tick() override;
     };
