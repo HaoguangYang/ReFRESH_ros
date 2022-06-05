@@ -8,11 +8,14 @@
 
 namespace BT
 {
-    class ReFRESH_Cost : public refresh_ros::ModuleEvaluate
+    class ReFRESH_Cost
     {
         public:
+            ReFRESH_Cost();
 
-            ReFRESH_Cost(const refresh_ros::ModuleEvaluate::ConstPtr& msg);
+            ReFRESH_Cost(size_t index, float& pCost, float& rCost);
+
+            ReFRESH_Cost(size_t index, const refresh_ros::ModuleEvaluate::ConstPtr& msg);
 
             inline void setPerformanceWeight(float& pWeight)
             {
@@ -26,12 +29,31 @@ namespace BT
                 rWeight_ = rWeight;
             }
 
+            inline void setPerformanceCost(float& pCost)
+            {
+                costUpdated_ = false;
+                pCost_ = pCost;
+            }
+
+            inline void setResourceCost(float& rCost)
+            {
+                costUpdated_ = false;
+                rCost_ = rCost;
+            }
+
             inline void updateWeightedCost() const
             {
                 if (costUpdated_)
                     return;
-                weightedCost = pWeight_*performanceCost + rWeight_*resourceCost;
+                wCost_ = pWeight_*pCost_ + rWeight_*rCost_;
                 costUpdated_ = true;
+            }
+
+            inline void updateCosts(float& pCost, float& rCost)
+            {
+                setPerformanceCost(pCost);
+                setResourceCost(rCost);
+                updateWeightedCost();
             }
 
             inline void setWeights(float& pWeight, float& rWeight)
@@ -41,18 +63,25 @@ namespace BT
                 updateWeightedCost();
             }
 
-            mutable float weightedCost;
+            inline size_t which() { return ind_; }
+
+            inline float weightedCost() const { return wCost_; }
+
+            inline bool feasible() { return (pCost_ < 1.0 && rCost_ < 1.0); }
 
         private:
             mutable bool costUpdated_;
+            size_t ind_;
             float pWeight_, rWeight_;
+            float pCost_, rCost_;
+            mutable float wCost_;
     };
 
     bool operator<(const ReFRESH_Cost& lhs, const ReFRESH_Cost& rhs)
     {
         lhs.updateWeightedCost();
         rhs.updateWeightedCost();
-        return lhs.weightedCost < rhs.weightedCost;
+        return lhs.weightedCost() < rhs.weightedCost();
     }
 
     class ReFRESH_Decider : public ControlNode
@@ -65,6 +94,8 @@ namespace BT
 
             virtual void halt() override;
 
+            virtual bool isDepleted() = 0;
+
             static BT::PortsList providedPorts()
             {
                 return {
@@ -73,11 +104,11 @@ namespace BT
                 };
             }
 
+            BT::NodeStatus turnOnBest();
+
         private:
 
             int indActive_;
-            
-            std::vector<ReFRESH_Cost> moduleCost_;
 
             virtual BT::NodeStatus tick() override;
     };
