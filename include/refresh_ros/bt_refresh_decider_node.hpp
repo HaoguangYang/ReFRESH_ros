@@ -71,6 +71,8 @@ namespace BT
 
             inline bool resourceFeasible() { return (rCost_ < 1.0); }
 
+            inline bool performanceFeasible() { return (pCost_ < 1.0); }
+
             inline bool feasible() { return (pCost_ < 1.0 && rCost_ < 1.0); }
 
         private:

@@ -29,6 +29,7 @@ namespace BT
     void ReFRESH_Decider::halt()
     {
         haltChild(indActive_);
+        indActive_ = -1;
         setStatus(NodeStatus::IDLE);
     }
 
@@ -52,7 +53,7 @@ namespace BT
             BT::ReFRESH_Module* tryConvert = dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[ind]);
             if (tryConvert == nullptr)
             {
-                // not a refresh module. if node status is success then make its cost 1-eps (least considered)
+                // not a refresh module. if node status is not-failure then make its cost 1-eps (least considered)
                 float pCost_, rCost_;
                 if (childStatus == NodeStatus::FAILURE)
                 {
@@ -125,21 +126,41 @@ namespace BT
         // one module is already running. tick until its status to turn SUCCESS or FAILURE, and check EV status.
         BT::NodeStatus childStatus = children_nodes_[indActive_]->executeTick();
         // update its EV reading after each tick.
-        std::tuple<BT::NodeStatus, float, float> mAssess =
-            dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[indActive_])->assess();
-        ReFRESH_Cost activeModuleCost =
-            ReFRESH_Cost(indActive_, std::get<1>(mAssess), std::get<2>(mAssess));
-        float pWeight_ = getInput<float>("performance_weight").value();
-        float rWeight_ = getInput<float>("resource_weight").value();
-        activeModuleCost.setWeights(pWeight_, rWeight_);
+        BT::ReFRESH_Module* tryConvert = dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[indActive_]);
+        ReFRESH_Cost activeModuleCost;
+        if (tryConvert == nullptr)
+        {
+            // not a refresh module. if node status is not-failure then make its cost 1-eps (least considered)
+            float pCost_, rCost_;
+            if (childStatus == NodeStatus::FAILURE)
+            {
+                pCost_ = 1.0;
+                rCost_ = 1.0;
+            } else {
+                pCost_ = 1.0-FLT_EPSILON;
+                rCost_ = 1.0-FLT_EPSILON;
+            }
+            activeModuleCost =
+                ReFRESH_Cost(indActive_, pCost_, rCost_);
+        } else {
+            std::tuple<BT::NodeStatus, float, float> mAssess =
+                dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[indActive_])->assess();
+            activeModuleCost =
+                ReFRESH_Cost(indActive_, std::get<1>(mAssess), std::get<2>(mAssess));
+        }
+        
+        //float pWeight_ = getInput<float>("performance_weight").value();
+        //float rWeight_ = getInput<float>("resource_weight").value();
+        //activeModuleCost.setWeights(pWeight_, rWeight_);
+        
         // Upon terminal state, check EV cost reading.
         // If any child module returns SUCCESS, return SUCCESS.
-        if (childStatus == NodeStatus::SUCCESS)
+        if (childStatus == NodeStatus::SUCCESS && activeModuleCost.performanceFeasible())
         {
             setStatus(NodeStatus::SUCCESS);
             return NodeStatus::SUCCESS;
         }
-        // If EV cost >=1 (or FAILURE), trigger reconfig.
+        // Something went wrong (failure, resource / performance infeasible), trigger reconfig.
         if (childStatus == NodeStatus::FAILURE || !activeModuleCost.feasible())
         {
             // tick inactive modules once, update and sort moduleCost_
