@@ -65,6 +65,8 @@ namespace BT
 
             inline size_t which() { return ind_; }
 
+            inline void which(size_t ind) { ind_ = ind; }
+
             inline float weightedCost() const { return wCost_; }
 
             inline bool resourceFeasible() { return (rCost_ < 1.0); }
@@ -96,13 +98,14 @@ namespace BT
 
             virtual void halt() override;
 
-            virtual bool isDepleted() = 0;
+            virtual bool isDepleted() { return false; }
 
             static BT::PortsList providedPorts()
             {
                 return {
                     BT::InputPort<float>("performance_weight"),
-                    BT::InputPort<float>("resource_weight")
+                    BT::InputPort<float>("resource_weight"),
+                    BT::InputPort<bool>("fallback_no_reconfig")
                 };
             }
 

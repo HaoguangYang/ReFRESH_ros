@@ -3,6 +3,23 @@
 
 namespace BT
 {
+    ReFRESH_Cost::ReFRESH_Cost() :
+        costUpdated_(false), ind_(0), pWeight_(0.5), rWeight_(0.5), pCost_(0.), rCost_(0.)
+    { }
+
+    ReFRESH_Cost::ReFRESH_Cost(size_t index, float& pCost, float& rCost) :
+        costUpdated_(false), ind_(index), pWeight_(0.5), rWeight_(0.5), pCost_(pCost), rCost_(rCost)
+    {
+        updateWeightedCost();
+    }
+
+    ReFRESH_Cost::ReFRESH_Cost(size_t index, const refresh_ros::ModuleEvaluate::ConstPtr& msg) :
+        costUpdated_(false), ind_(index), pWeight_(0.5), rWeight_(0.5),
+        pCost_(msg->performanceCost), rCost_(msg->resourceCost)
+    {
+        updateWeightedCost();
+    }
+
     ReFRESH_Decider::ReFRESH_Decider(const std::string& name):
         ControlNode::ControlNode(name, {}), indActive_(-1)
     {
@@ -11,6 +28,7 @@ namespace BT
 
     void ReFRESH_Decider::halt()
     {
+        haltChild(indActive_);
         setStatus(NodeStatus::IDLE);
     }
 
@@ -71,7 +89,7 @@ namespace BT
                     bestPossibleSet = true;
                     bestPossible_ = moduleCost_[ind].which();
                 }
-                haltChild(moduleCost_[ind].which());
+                //haltChild(moduleCost_[ind].which());
                 ind ++;
                 continue;
             }
@@ -81,7 +99,7 @@ namespace BT
             {
                 // if a solution is feasible, it should NOT has ES returned FAILURE.
                 // This rule-out is just to be safe.
-                haltChild(preOn);
+                //haltChild(preOn);
                 ind ++;
                 continue;
             }
@@ -90,10 +108,10 @@ namespace BT
             break;
         }
         // halt all other modules.
-        for ( ; ind < childrenCount(); ind ++)
-        {
-            haltChild(moduleCost_[ind].which());
-        }
+        //for ( ; ind < childrenCount(); ind ++)
+        //{
+        //    haltChild(moduleCost_[ind].which());
+        //}
         return NodeStatus::RUNNING;
     }
 
@@ -132,14 +150,20 @@ namespace BT
             // get policy when candidate can not provide a satisfactory alternative.
             if (bestResultsInCandidates == NodeStatus::FAILURE)
             {
-                // select between useBestPossible, and keepCurrentConfig.
+                // select between useBestPossibleAlt, and keepCurrentConfig.
+                bool keepCurrent = getInput<bool>("fallback_no_reconfig").value();
                 // setActive and tick the min-cost and not last-run module
+                if (keepCurrent)
+                    indActive_ = lastRun;
+                else
+                    indActive_ = bestPossible_;
             }
             
             // halt all other modules
             if (lastRun != indActive_)
                 haltChild(lastRun);
             
+            // called after each reconfig
             if (isDepleted())
             {
                 setStatus(NodeStatus::FAILURE);
