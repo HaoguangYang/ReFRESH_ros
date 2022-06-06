@@ -67,6 +67,8 @@ namespace BT
 
             inline float weightedCost() const { return wCost_; }
 
+            inline bool resourceFeasible() { return (rCost_ < 1.0); }
+
             inline bool feasible() { return (pCost_ < 1.0 && rCost_ < 1.0); }
 
         private:
@@ -109,6 +111,8 @@ namespace BT
         private:
 
             int indActive_;
+
+            int bestPossible_;
 
             virtual BT::NodeStatus tick() override;
     };

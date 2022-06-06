@@ -17,7 +17,7 @@ namespace BT
     BT::NodeStatus ReFRESH_Decider::turnOnBest()
     {
         std::vector<ReFRESH_Cost> moduleCost_;
-        size_t ind;
+        int ind;
         float pWeight_ = getInput<float>("performance_weight").value();
         float rWeight_ = getInput<float>("resource_weight").value();
         for (ind = 0; ind < childrenCount(); ind ++)
@@ -29,7 +29,6 @@ namespace BT
             // this is a fall-back node, anyway.
             if (childStatus == NodeStatus::SUCCESS)
             {
-                setStatus(NodeStatus::SUCCESS);
                 return NodeStatus::SUCCESS;
             }
             BT::ReFRESH_Module* tryConvert = dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[ind]);
@@ -56,25 +55,45 @@ namespace BT
         // sort moduleCost_
         std::stable_sort(moduleCost_.begin(), moduleCost_.end());
         // check feasibility in cost-ascending order
-        // TODO: wrap in while loop. check logic --------
-        if (!moduleCost_[0].feasible())
+        ind = 0;
+        bool bestPossibleSet = false;
+        while (true)
         {
-            setStatus(NodeStatus::FAILURE);
-            return NodeStatus::FAILURE;
-        }
-        // take the module with smallest cost, and note its index as indActive_
-        indActive_ = moduleCost_[0].which();
-        if (children_nodes_[indActive_]->status() == NodeStatus::FAILURE)
-        {
-            setStatus(NodeStatus::FAILURE);
-            return NodeStatus::FAILURE;
+            if (ind >= moduleCost_.size())
+            {
+                // no candidate satisfies the requirements
+                return NodeStatus::FAILURE;
+            }
+            if (!moduleCost_[ind].feasible())
+            {
+                if (!bestPossibleSet && moduleCost_[ind].resourceFeasible())
+                {
+                    bestPossibleSet = true;
+                    bestPossible_ = moduleCost_[ind].which();
+                }
+                haltChild(moduleCost_[ind].which());
+                ind ++;
+                continue;
+            }
+            // take the module with smallest cost, and note its index as indActive_
+            int preOn = moduleCost_[ind].which();
+            if (children_nodes_[preOn]->status() == NodeStatus::FAILURE)
+            {
+                // if a solution is feasible, it should NOT has ES returned FAILURE.
+                // This rule-out is just to be safe.
+                haltChild(preOn);
+                ind ++;
+                continue;
+            }
+            indActive_ = preOn;
+            ind ++;
+            break;
         }
         // halt all other modules.
-        for (ind = 1; ind < childrenCount(); ind ++)
+        for ( ; ind < childrenCount(); ind ++)
         {
             haltChild(moduleCost_[ind].which());
         }
-        // TODO: ----------------------------------------
         return NodeStatus::RUNNING;
     }
 
@@ -106,8 +125,21 @@ namespace BT
         if (childStatus == NodeStatus::FAILURE || !activeModuleCost.feasible())
         {
             // tick inactive modules once, update and sort moduleCost_
-            // setActive and tick the min-cost and not last-run module
+            int lastRun = indActive_;
+            BT::NodeStatus bestResultsInCandidates = turnOnBest();
+            // indActive_ has been changed, if a viable solution is found. We need to verify it.
+            // if status is not FAILURE, the result is valid.
+            // get policy when candidate can not provide a satisfactory alternative.
+            if (bestResultsInCandidates == NodeStatus::FAILURE)
+            {
+                // select between useBestPossible, and keepCurrentConfig.
+                // setActive and tick the min-cost and not last-run module
+            }
+            
             // halt all other modules
+            if (lastRun != indActive_)
+                haltChild(lastRun);
+            
             if (isDepleted())
             {
                 setStatus(NodeStatus::FAILURE);
