@@ -83,6 +83,12 @@ namespace BT
             {
                return spinOnceImpl();
             }
+
+            inline void onHalted() override
+            {
+                // TODO: what to do here?
+                return;
+            }
         
         protected:
             FeedbackType fb_;
@@ -112,12 +118,18 @@ namespace BT
     class ReFRESH_ROS_EV_node : public ActionEvaluatorNode<refresh_ros::HighLevelRequestAction>
     {
         public:
+            ReFRESH_ROS_EV_node( const std::string& name, const NodeConfiguration & conf):
+                ActionEvaluatorNode<refresh_ros::HighLevelRequestAction>(name, conf) {}
+
             virtual BT::NodeStatus spinOnce() override;
     };
 
     class ReFrESH_ROS_ES_node : public RosServiceNode<refresh_ros::ModuleEstimate>
     {
         public:
+            ReFrESH_ROS_ES_node( ros::NodeHandle& handle, const std::string& name, const NodeConfiguration & conf):
+                RosServiceNode<refresh_ros::ModuleEstimate>(handle, name, conf) {}
+
             /// These ports will be added automatically if this Node is
             /// registered using RegisterReFRESH_EV<DeriveClass>()
             static PortsList providedPorts()
@@ -127,6 +139,8 @@ namespace BT
                     OutputPort<float>("resource_cost")
                 };
             }
+
+            virtual void sendRequest(RequestType& request) override;
 
             virtual NodeStatus onResponse(const ResponseType& rep) override;
     };

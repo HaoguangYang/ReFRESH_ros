@@ -2,12 +2,6 @@
 
 namespace BT
 {
-    ReFRESH_Module::ReFRESH_Module(const std::string& name):
-        ControlNode::ControlNode(name, {}), asyncEV_(false), initialEV_(false)
-    {
-        setRegistrationID("ReFRESH_Module");
-    }
-
     void ReFRESH_Module::halt()
     {
         // Stop EX

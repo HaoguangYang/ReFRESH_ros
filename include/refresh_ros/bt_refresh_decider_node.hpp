@@ -93,8 +93,9 @@ namespace BT
     class ReFRESH_Decider : public ControlNode
     {
         public:
-
-            ReFRESH_Decider(const std::string& name);
+            ReFRESH_Decider(const std::string& name, const BT::NodeConfiguration& config):
+                BT::ControlNode(name, config), indActive_(-1), bestPossible_(0)
+            {}
 
             virtual ~ReFRESH_Decider() override = default;
 

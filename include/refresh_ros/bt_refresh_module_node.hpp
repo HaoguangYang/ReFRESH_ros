@@ -10,7 +10,10 @@ namespace BT
     {
         public:
 
-            ReFRESH_Module(const std::string& name);
+            ReFRESH_Module(const std::string& name, const BT::NodeConfiguration& config):
+                BT::ControlNode(name, config), asyncEV_(false), initialEV_(false),
+                pCost_(0.5), rCost_(0.5)
+            {}
 
             virtual ~ReFRESH_Module() override = default;
 

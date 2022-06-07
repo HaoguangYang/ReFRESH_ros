@@ -56,9 +56,7 @@ catkin_package(
 include_directories( include ${catkin_INCLUDE_DIRS} )
 
 ######################################################
-# LIBRARIES
-
-#header only for the time being
+# Also build LIBRARIES
 
 add_library(ReFRESHmoduleNode src/bt_refresh_module_node.cpp)
 add_dependencies(ReFRESHmoduleNode ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -71,6 +69,18 @@ target_link_libraries(ReFRESHactionNode ${catkin_LIBRARIES})
 add_library(ReFRESHdeciderNode src/bt_refresh_decider_node.cpp)
 add_dependencies(ReFRESHdeciderNode ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(ReFRESHdeciderNode ${catkin_LIBRARIES})
+
+######################################################
+# Task BT engine
+
+add_executable(ReFRESH_ROS_TaskBT_Engine src/task_bt_engine.cpp)
+add_dependencies(ReFRESH_ROS_TaskBT_Engine ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(ReFRESH_ROS_TaskBT_Engine
+    ${catkin_LIBRARIES}
+    ReFRESHmoduleNode
+    ReFRESHactionNode
+    ReFRESHdeciderNode
+)
 
 ######################################################
 # TESTS

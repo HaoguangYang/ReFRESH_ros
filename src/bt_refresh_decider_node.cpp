@@ -16,12 +16,6 @@ namespace BT
         pCost_(msg->performanceCost), rCost_(msg->resourceCost)
     { }
 
-    ReFRESH_Decider::ReFRESH_Decider(const std::string& name):
-        ControlNode::ControlNode(name, {}), indActive_(-1)
-    {
-        setRegistrationID("ReFRESH_Decider");
-    }
-
     void ReFRESH_Decider::halt()
     {
         haltChild(indActive_);
