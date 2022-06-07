@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+  in Groot: Import Pallet -> Select this XML.
+-->
+<root>
+  <TreeNodesModel>
+    <!-- ############################### ACTION NODES ################################# -->
+    <Action ID="ReFRESH_ROS_EV">
+      <input_port name="feedback">Feedback from Action EX</input_port>
+      <output_port name="performance_cost">Extracted cost (0..1): Performance aspect</output_port>
+      <output_port name="resource_cost">Extracted cost (0..1): Resource aspect</output_port>
+    </Action>
+
+    <Action ID="ReFrESH_ROS_ES">
+      <input_port name="service_name">Name of the ROS service Estimator of Action EX.</input_port>
+      <input_port name="timeout">Timeout connecting to server (ms)</input_port>
+      <output_port name="performance_cost">Estimated cost (0..1): Performance aspect</output_port>
+      <output_port name="resource_cost">Estimated cost (0..1): Resource aspect</output_port>
+    </Action>
+
+    <Action ID="ReFRESH_ROS_EX">
+      <input_port name="server_name">Name of the Action Server as EX (Executor)</input_port>
+      <input_port name="timeout">Timeout connecting to server (ms)</input_port>
+      <input_port name="action_request">Action (High-Level) to be executed by EX</input_port>
+      <input_port name="arguments">Arguments of Action (High-Level) to be passed to EX</input_port>
+      <output_port name="feedback">Pointer to action feedback</output_port>
+    </Action>
+
+    <Control ID="ReFRESH_Module">
+      <input_port name="performance_cost">Cost (0..1): Performance aspect of children nodes</input_port>
+      <input_port name="resource_cost">Cost (0..1): Resource aspect of children nodes</input_port>
+    </Control>
+
+    <Control ID="ReFRESH_Decider">
+      <input_port name="performance_weight">Weight of performance cost upon comparing candidate optimality</input_port>
+      <input_port name="resource_weight">Weight of resource cost upon comparing candidate optimality</input_port>
+      <input_port name="fallback_no_reconfig">Boolean: if no candidate satisfies both resource and performance, do nothing?
+                                              (Otherwise, use resource-feasible candidate with best performance)</input_port>
+    </Control>
+  </TreeNodesModel>
+</root>

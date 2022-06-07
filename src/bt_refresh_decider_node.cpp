@@ -9,16 +9,12 @@ namespace BT
 
     ReFRESH_Cost::ReFRESH_Cost(size_t index, float& pCost, float& rCost) :
         costUpdated_(false), ind_(index), pWeight_(0.5), rWeight_(0.5), pCost_(pCost), rCost_(rCost)
-    {
-        updateWeightedCost();
-    }
+    { }
 
     ReFRESH_Cost::ReFRESH_Cost(size_t index, const refresh_ros::ModuleEvaluate::ConstPtr& msg) :
         costUpdated_(false), ind_(index), pWeight_(0.5), rWeight_(0.5),
         pCost_(msg->performanceCost), rCost_(msg->resourceCost)
-    {
-        updateWeightedCost();
-    }
+    { }
 
     ReFRESH_Decider::ReFRESH_Decider(const std::string& name):
         ControlNode::ControlNode(name, {}), indActive_(-1)

@@ -103,7 +103,7 @@ namespace BT
         manifest.type = getType<DerivedT>();
         manifest.ports = DerivedT::providedPorts();
         manifest.registration_ID = registration_ID;
-        const auto& basic_ports = ActionEvaluatorNode< typename DerivedT::ActionType>::providedPorts();
+        const auto& basic_ports = ActionEvaluatorNode< typename DerivedT::ActionType >::providedPorts();
         manifest.ports.insert( basic_ports.begin(), basic_ports.end() );
 
         factory.registerBuilder( manifest, builder );
