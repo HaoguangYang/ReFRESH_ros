@@ -8,7 +8,9 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 ######################################################
 
 set(ROS_DEPENDENCIES
-    roscpp std_msgs
+    roscpp
+    rospy
+    std_msgs
     behaviortree_cpp_v3
     actionlib_msgs
     actionlib
@@ -40,6 +42,8 @@ add_action_files(
    Fibonacci.action
    HighLevelRequest.action
 )
+
+catkin_python_setup()
 
 generate_messages(
   DEPENDENCIES
