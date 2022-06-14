@@ -35,6 +35,15 @@
     <Control ID="ReFRESH_Decider">
       <input_port name="performance_weight">Weight of performance cost upon comparing candidate optimality</input_port>
       <input_port name="resource_weight">Weight of resource cost upon comparing candidate optimality</input_port>
+      <input_port name="retries">Number of retries for each child upon failure</input_port>
+      <input_port name="fallback_no_reconfig">Boolean: if no candidate satisfies both resource and performance, do nothing?
+                                              (Otherwise, use resource-feasible candidate with best performance)</input_port>
+    </Control>
+
+    <Control ID="ReFRESH_Reactor">
+      <input_port name="performance_weight">Weight of performance cost upon comparing candidate optimality</input_port>
+      <input_port name="resource_weight">Weight of resource cost upon comparing candidate optimality</input_port>
+      <input_port name="retries">Number of retries for each child upon failure</input_port>
       <input_port name="fallback_no_reconfig">Boolean: if no candidate satisfies both resource and performance, do nothing?
                                               (Otherwise, use resource-feasible candidate with best performance)</input_port>
     </Control>

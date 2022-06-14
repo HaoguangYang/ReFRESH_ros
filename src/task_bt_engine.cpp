@@ -4,7 +4,7 @@
 #include "behaviortree_cpp_v3/loggers/bt_zmq_publisher.h"
 #include "refresh_ros/bt_refresh_ros_action_node.hpp"
 #include "refresh_ros/bt_refresh_module_node.hpp"
-#include "refresh_ros/bt_refresh_decider_node.hpp"
+#include "refresh_ros/bt_refresh_control_node.hpp"
 
 int main(int argc, char **argv) 
 {
@@ -19,6 +19,7 @@ int main(int argc, char **argv)
     BT::RegisterRosService<BT::ReFrESH_ROS_ES_node>(factory, "ReFRESH_ROS_ES", nh);
     factory.registerNodeType<BT::ReFRESH_Module>("ReFRESH_Module");
     factory.registerNodeType<BT::ReFRESH_Decider>("ReFRESH_Decider");
+    factory.registerNodeType<BT::ReFRESH_Reactor>("ReFRESH_Reactor");
 
     // load behavior tree xml from argc or argv or ROS param
     std::string bt_file;

@@ -7,11 +7,14 @@ namespace BT
         // Stop EX
         ControlNode::haltChild(0);
         // Stop EV
-        ControlNode::haltChild(1);
+        if (childrenCount()>1)
+            ControlNode::haltChild(1);
         // Stop ES
-        ControlNode::haltChild(2);
-        initialEV_ = false;
+        if (childrenCount()>2)
+            ControlNode::haltChild(2);
+        //initialEV_ = false;
         asyncEV_ = false;
+        prestartES_ = false;
         setStatus(NodeStatus::IDLE);
     }
 
@@ -20,38 +23,28 @@ namespace BT
         // First, run ES to determine if the EX is feasible
         if (status() == NodeStatus::IDLE)
         {
-            BT::NodeStatus ESstatus = estimate_();
-            if (ESstatus != NodeStatus::SUCCESS)
+            if (!prestartES_)
             {
-                if (ESstatus == NodeStatus::IDLE)
-                    throw LogicError("A child node must never return IDLE");
-                setStatus(NodeStatus::FAILURE);
-                if (children_nodes_.size()>=3)
-                    ControlNode::haltChild(2);
-                return NodeStatus::FAILURE;
+                BT::NodeStatus ESstatus = estimate_();
+                if (ESstatus == NodeStatus::FAILURE)
+                {
+                    return NodeStatus::FAILURE;
+                }
             }
-            // ES -> SUCCESS: EX is feasible
+            // ES -> SUCCESS: EX is feasible as an optimistic estimate.
             setStatus(NodeStatus::RUNNING);
-            initialEV_ = true;
-            return NodeStatus::RUNNING;
-        }
 
-        // Second, run EV to determine if the goal of EX is already reached
-        if (initialEV_)
-        {
+            // Second, run EV to determine if the goal of EX is already reached
+            // the unsuccessful result of the first evaluator tick is not important.
             BT::NodeStatus EVstatus = evaluate_();
             // Goal is already reached, no need to run EX.
             if (EVstatus == NodeStatus::SUCCESS)
             {
-                setStatus(NodeStatus::SUCCESS);
                 return NodeStatus::SUCCESS;
             }
-            if (EVstatus == NodeStatus::IDLE)
-                throw LogicError("A child node must never return IDLE");
             // If EV returned running, it is an async node, need to tick every period
             asyncEV_ = (EVstatus == NodeStatus::RUNNING);
-            initialEV_ = false;
-            return NodeStatus::RUNNING;
+            //return NodeStatus::RUNNING;
         }
 
         // Third, run EX.
@@ -65,12 +58,15 @@ namespace BT
                 // Is it really a satisfactory result? If not, override with failure state
                 if (evaluate_() != NodeStatus::SUCCESS)
                 {
-                    setStatus(NodeStatus::FAILURE);
-                    if (children_nodes_.size()>=2)
+                    if (childrenCount()>1)
                         ControlNode::haltChild(1);
                     return NodeStatus::FAILURE;
                 }
-                setStatus(NodeStatus::SUCCESS);
+                // evaluate_() == SUCCESS (successfully completed, we need to check consistency just to be safe)
+                if (pCost_ >= 1.0)
+                {
+                    return NodeStatus::FAILURE;
+                }
                 return NodeStatus::SUCCESS;
                 break;
             
@@ -84,19 +80,30 @@ namespace BT
                 if (asyncEV_)
                 {
                     // EV signals SUCCESS ahead of EX. exit here.
-                    if (evaluate_() == NodeStatus::SUCCESS)
+                    BT::NodeStatus evStatus = evaluate_();
+                    if (evStatus == NodeStatus::SUCCESS)
                     {
-                        setStatus(NodeStatus::SUCCESS);
                         ControlNode::haltChild(0);
                         return NodeStatus::SUCCESS;
+                    }
+                    if (evStatus == NodeStatus::FAILURE)
+                    {
+                        ControlNode::haltChild(0);
+                        return NodeStatus::FAILURE;
+                    }
+                    // in the process. Need to monitor performance and resource.
+                    if (rCost_ >= 1.0 || pCost_ >= 1.0)
+                    {
+                        ControlNode::haltChild(0);
+                        ControlNode::haltChild(1);
+                        return NodeStatus::FAILURE;
                     }
                 }
                 return NodeStatus::RUNNING;
                 break;
 
             case NodeStatus::FAILURE:
-                setStatus(NodeStatus::FAILURE);
-                if (children_nodes_.size()>=2)
+                if (childrenCount()>1)
                     ControlNode::haltChild(1);
                 return NodeStatus::FAILURE;
                 break;
