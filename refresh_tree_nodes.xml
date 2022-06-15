@@ -22,6 +22,8 @@
     <Action ID="ReFrESH_ROS_ES">
       <input_port name="service_name">Name of the ROS service Estimator of Action EX.</input_port>
       <input_port name="timeout">Timeout connecting to server (ms)</input_port>
+      <input_port name="action_request">Action (High-Level) to be estimated by ES</input_port>
+      <input_port name="arguments">Arguments of Action (High-Level) to be passed to ES</input_port>
       <output_port name="performance_cost">Estimated cost (0..1): Performance aspect</output_port>
       <output_port name="resource_cost">Estimated cost (0..1): Resource aspect</output_port>
     </Action>

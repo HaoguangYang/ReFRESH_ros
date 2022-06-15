@@ -4,14 +4,17 @@
 namespace BT
 {
     ReFRESH_Cost::ReFRESH_Cost() :
-        costUpdated_(false), ind_(0), pWeight_(0.5), rWeight_(0.5), pCost_(0.), rCost_(0.)
+        costUpdated_(false), ind_(0), pWeight_(0.5), rWeight_(0.5),
+        pCost_(0.), rCost_(0.)
     { }
 
     ReFRESH_Cost::ReFRESH_Cost(size_t index, float& pCost, float& rCost) :
-        costUpdated_(false), ind_(index), pWeight_(0.5), rWeight_(0.5), pCost_(pCost), rCost_(rCost)
+        costUpdated_(false), ind_(index), pWeight_(0.5), rWeight_(0.5),
+        pCost_(pCost), rCost_(rCost)
     { }
 
-    ReFRESH_Cost::ReFRESH_Cost(size_t index, const refresh_ros::ModuleEvaluate::ConstPtr& msg) :
+    ReFRESH_Cost::ReFRESH_Cost(size_t index,
+                            const refresh_ros::ModuleEvaluate::ConstPtr& msg) :
         costUpdated_(false), ind_(index), pWeight_(0.5), rWeight_(0.5),
         pCost_(msg->performanceCost), rCost_(msg->resourceCost)
     { }
@@ -41,7 +44,8 @@ namespace BT
             if (nRetry_[ind] > retries)
                 continue;
 
-            BT::ReFRESH_Module* tryConvert = dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[ind]);
+            BT::ReFRESH_Module* tryConvert = 
+                dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[ind]);
             // improper type, try to tick once and check result.
             if (tryConvert == nullptr)
             {
@@ -78,11 +82,13 @@ namespace BT
             }
 
             // proper type, use speialized function
-            std::tuple<BT::NodeStatus, float, float> esCost = tryConvert->estimate();
+            std::tuple<BT::NodeStatus, float, float> esCost =
+                tryConvert->estimate();
             // ES returned FAILURE (hard failure), skipping
             if (std::get<0>(esCost) == NodeStatus::FAILURE)
                 continue;
-            moduleCost_.push_back(ReFRESH_Cost(ind, std::get<1>(esCost), std::get<2>(esCost)));
+            moduleCost_.push_back(ReFRESH_Cost(
+                ind, std::get<1>(esCost), std::get<2>(esCost)));
             moduleCost_.back().setWeights(pWeight_, rWeight_);
         }
         // sort moduleCost_
@@ -142,7 +148,8 @@ namespace BT
         // one module is already running. tick until its status to turn SUCCESS or FAILURE, and check EV status.
         childStatus = children_nodes_[indActive_]->executeTick();
         // update its EV reading after each tick.
-        BT::ReFRESH_Module* tryConvert = dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[indActive_]);
+        BT::ReFRESH_Module* tryConvert =
+            dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[indActive_]);
         if (tryConvert == nullptr)
         {
             // not a refresh module. if node status is not-failure then make its cost 1-eps (least considered)
@@ -158,7 +165,8 @@ namespace BT
             activeModuleCost_ =
                 ReFRESH_Cost(indActive_, pCost_, rCost_);
         } else {
-            std::tuple<BT::NodeStatus, float, float> evCost = tryConvert->evaluate();
+            std::tuple<BT::NodeStatus, float, float> evCost =
+                tryConvert->evaluate();
             activeModuleCost_ =
                 ReFRESH_Cost(indActive_, std::get<1>(evCost), std::get<2>(evCost));
         }
@@ -232,7 +240,8 @@ namespace BT
             if (nRetry_[ind] > retries)
                 continue;
             
-            BT::ReFRESH_Module* tryConvert = dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[ind]);
+            BT::ReFRESH_Module* tryConvert =
+                dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[ind]);
             if (tryConvert == nullptr)
             {
                 // not a refresh module. if node status is not-failure then make its cost 1-eps (least considered)
@@ -267,11 +276,13 @@ namespace BT
                 }
                 continue;
             }
-            std::tuple<BT::NodeStatus, float, float> esCost = tryConvert->estimate();
+            std::tuple<BT::NodeStatus, float, float> esCost =
+                tryConvert->estimate();
             // ES returned FAILURE (hard failure), skipping
             if (std::get<0>(esCost) == NodeStatus::FAILURE)
                 continue;
-            moduleCost_.push_back(ReFRESH_Cost(ind, std::get<1>(esCost), std::get<2>(esCost)));
+            moduleCost_.push_back(ReFRESH_Cost(
+                ind, std::get<1>(esCost), std::get<2>(esCost)));
             moduleCost_.back().setWeights(pWeight_, rWeight_);
         }
         // sort moduleCost_
@@ -325,7 +336,8 @@ namespace BT
         if (nRetry_.back() > retries)
             return NodeStatus::FAILURE;
         
-        BT::ReFRESH_Module* tryConvert = dynamic_cast<BT::ReFRESH_Module*>(children_nodes_.back());
+        BT::ReFRESH_Module* tryConvert =
+            dynamic_cast<BT::ReFRESH_Module*>(children_nodes_.back());
         if (tryConvert == nullptr)
         {
             // not a refresh module. if node status is not-failure then make its cost 1-eps (least considered)
@@ -403,7 +415,8 @@ namespace BT
         childStatus = children_nodes_[indActive_]->executeTick();
 
         // update its EV reading after each tick.
-        BT::ReFRESH_Module* tryConvert = dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[indActive_]);
+        BT::ReFRESH_Module* tryConvert =
+            dynamic_cast<BT::ReFRESH_Module*>(children_nodes_[indActive_]);
         if (tryConvert == nullptr)
         {
             // not a refresh module. if node status is not-failure then make its cost 1-eps (least considered)
@@ -419,7 +432,8 @@ namespace BT
             activeModuleCost_ =
                 ReFRESH_Cost(indActive_, pCost_, rCost_);
         } else {
-            std::tuple<BT::NodeStatus, float, float> evCost = tryConvert->evaluate();
+            std::tuple<BT::NodeStatus, float, float> evCost =
+                tryConvert->evaluate();
             activeModuleCost_ =
                 ReFRESH_Cost(indActive_, std::get<1>(evCost), std::get<2>(evCost));
         }

@@ -10,7 +10,8 @@ namespace BT
     {
         public:
 
-            ReFRESH_Module(const std::string& name, const BT::NodeConfiguration& config):
+            ReFRESH_Module(const std::string& name,
+                            const BT::NodeConfiguration& config):
                 BT::ControlNode(name, config), asyncEV_(false), prestartES_(false),
                 pCost_(0.5), rCost_(0.5)
             {}
@@ -117,15 +118,22 @@ namespace BT
                 if ( ! (pmsg = getInput<float>("performance_cost", pCost_)) )
                 {
                     haltChild(1);
-                    throw BT::RuntimeError("EV missing required input [performance_cost]: ", pmsg.error());
+                    throw BT::RuntimeError(
+                        "EV missing required input [performance_cost]: ",
+                        pmsg.error());
                 }
                 if ( ! (rmsg = getInput<float>("resource_cost", rCost_)) )
                 {
                     haltChild(1);
-                    throw BT::RuntimeError("EV missing required input [resource_cost]: ", rmsg.error());
+                    throw BT::RuntimeError(
+                        "EV missing required input [resource_cost]: ",
+                        rmsg.error());
                 }
                 if (EVstatus == NodeStatus::IDLE)
-                    throw LogicError("EV node is ticked but still returned IDLE");
+                {
+                    throw LogicError(
+                        "EV node is ticked but still returned IDLE");
+                }
                 return EVstatus;
             }
 
@@ -155,9 +163,17 @@ namespace BT
                     return NodeStatus::FAILURE;
                 }
                 if ( ! (pmsg = getInput<float>("performance_cost", pCost_)) )
-                    throw BT::RuntimeError("ES missing required input [performance_cost]: ", pmsg.error());
+                {
+                    throw BT::RuntimeError(
+                        "ES missing required input [performance_cost]: ",
+                        pmsg.error());
+                }
                 if ( ! (rmsg = getInput<float>("resource_cost", rCost_)) )
-                    throw BT::RuntimeError("ES missing required input [resource_cost]: ", rmsg.error());
+                {
+                    throw BT::RuntimeError(
+                        "ES missing required input [resource_cost]: ",
+                        rmsg.error());
+                }
                 if (ESstatus == NodeStatus::IDLE)
                     throw LogicError("ES node is ticked but still returned IDLE");
                 return ESstatus;

@@ -40,8 +40,9 @@ class RosActionNode : public BT::ActionNodeBase
 {
 protected:
 
-  RosActionNode(ros::NodeHandle& nh, const std::string& name, const BT::NodeConfiguration & conf):
-  BT::ActionNodeBase(name, conf), node_(nh)
+  RosActionNode(ros::NodeHandle& nh, const std::string& name,
+                const BT::NodeConfiguration & conf):
+    BT::ActionNodeBase(name, conf), node_(nh)
   {}
 
 public:
@@ -51,9 +52,12 @@ public:
   using ActionType = ActionT;
   using GoalType   = typename ActionT::_action_goal_type::_goal_type;
   using ResultType = typename ActionT::_action_result_type::_result_type;
-  using ResultTypePtr = typename ActionT::_action_result_type::_result_type::ConstPtr;
-  using FeedbackType = typename ActionT::_action_feedback_type::_feedback_type;
-  using FeedbackTypePtr = typename ActionT::_action_feedback_type::_feedback_type::ConstPtr;
+  using ResultTypePtr = typename
+                        ActionT::_action_result_type::_result_type::ConstPtr;
+  using FeedbackType = typename
+                        ActionT::_action_feedback_type::_feedback_type;
+  using FeedbackTypePtr = typename
+                        ActionT::_action_feedback_type::_feedback_type::ConstPtr;
 
   RosActionNode() = delete;
 
@@ -75,7 +79,10 @@ public:
   /// FAILURE and no request is sent to the server.
   virtual bool sendGoal(GoalType& goal) = 0;
 
-  virtual FeedbackTypePtr resultToFeedback(const ResultTypePtr& res) { return NULL; }
+  virtual FeedbackTypePtr resultToFeedback(const ResultTypePtr& res)
+  {
+    return NULL;
+  }
 
   /// Method (to be implemented by the user) to receive the reply.
   /// User can decide which NodeStatus it will return (SUCCESS or FAILURE).
@@ -114,7 +121,8 @@ public:
     setStatus(NodeStatus::IDLE);
   }
 
-  void onResultCb(const actionlib::SimpleClientGoalState& state, const ResultTypePtr& res)
+  void onResultCb(const actionlib::SimpleClientGoalState& state,
+                  const ResultTypePtr& res)
   {
     switch (state.state_)
     {
@@ -147,7 +155,10 @@ public:
 
   inline void onActiveCb(void){ setStatus(NodeStatus::RUNNING); }
   
-  inline void onFeedbackCb(const FeedbackTypePtr& fb){ setOutput("feedback", fb); }
+  inline void onFeedbackCb(const FeedbackTypePtr& fb)
+  {
+    setOutput("feedback", fb);
+  }
 
 protected:
 
@@ -162,8 +173,11 @@ protected:
       BT::Result inRes;
       std::string server_name;
       if ( !(inRes = getInput<std::string>("server_name", server_name)))
-          throw(BT::RuntimeError("ROS Action Node missing required input [server_name]: ", inRes.error()));
-      action_client_ = std::make_shared<ActionClientType>( node_, server_name, true );
+          throw(BT::RuntimeError(
+            "ROS Action Node missing required input [server_name]: ",
+            inRes.error()));
+      action_client_ = std::make_shared<ActionClientType>
+                        ( node_, server_name, true );
       unsigned msec = getInput<unsigned>("timeout").value();
       ros::Duration timeout(static_cast<double>(msec) * 1e-3);
 
@@ -185,9 +199,9 @@ protected:
         return NodeStatus::FAILURE;
       }
       action_client_->sendGoal(goal,
-                                boost::bind(&RosActionNode<ActionType>::onResultCb, this, ::_1, ::_2),
-                                boost::bind(&RosActionNode<ActionType>::onActiveCb, this),
-                                boost::bind(&RosActionNode<ActionType>::onFeedbackCb, this, ::_1));
+            boost::bind(&RosActionNode<ActionType>::onResultCb, this, ::_1, ::_2),
+            boost::bind(&RosActionNode<ActionType>::onActiveCb, this),
+            boost::bind(&RosActionNode<ActionType>::onFeedbackCb, this, ::_1));
     }
 
     /*
@@ -237,7 +251,9 @@ template <class DerivedT> static
                          const std::string& registration_ID,
                          ros::NodeHandle& node_handle)
 {
-  NodeBuilder builder = [&node_handle](const std::string& name, const NodeConfiguration& config) {
+  NodeBuilder builder = [&node_handle](const std::string& name,
+                                      const NodeConfiguration& config)
+  {
     return std::make_unique<DerivedT>(node_handle, name, config );
   };
 
@@ -245,7 +261,8 @@ template <class DerivedT> static
   manifest.type = getType<DerivedT>();
   manifest.ports = DerivedT::providedPorts();
   manifest.registration_ID = registration_ID;
-  const auto& basic_ports = RosActionNode< typename DerivedT::ActionType>::providedPorts();
+  const auto& basic_ports =
+              RosActionNode< typename DerivedT::ActionType>::providedPorts();
   manifest.ports.insert( basic_ports.begin(), basic_ports.end() );
   factory.registerBuilder( manifest, builder );
 }

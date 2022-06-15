@@ -16,7 +16,8 @@ class RosSubscriberNode : public BT::StatefulActionNode
 {
 protected:
 
-  RosSubscriberNode(ros::NodeHandle& nh, const std::string& name, const BT::NodeConfiguration & conf):
+  RosSubscriberNode(ros::NodeHandle& nh, const std::string& name,
+                    const BT::NodeConfiguration & conf):
    BT::StatefulActionNode(name, conf), node_(nh) { }
 
 public:
@@ -49,9 +50,10 @@ public:
     BT::Result inRes;
     std::string topic_name;
     if ( !(inRes = getInput<std::string>("topic_name", topic_name)))
-        throw(BT::RuntimeError("ROS Action Node missing required input [topic_name]: ", inRes.error()));
+        throw(BT::RuntimeError(
+          "ROS Action Node missing required input [topic_name]: ", inRes.error()));
     sub_ = node_.subscribe(topic_name, getInput<unsigned>("topic_name").value(),
-              boost::bind(&RosSubscriberNode<MessageType>::onMessageCb, this, _1));
+            boost::bind(&RosSubscriberNode<MessageType>::onMessageCb, this, _1));
   }
 
   NodeStatus onRunning() override
@@ -91,7 +93,9 @@ template <class DerivedT> static
                      const std::string& registration_ID,
                      ros::NodeHandle& node_handle)
 {
-  NodeBuilder builder = [&node_handle](const std::string& name, const NodeConfiguration& config) {
+  NodeBuilder builder = [&node_handle](const std::string& name,
+                                      const NodeConfiguration& config)
+  {
     return std::make_unique<DerivedT>(node_handle, name, config );
   };
 
@@ -99,7 +103,8 @@ template <class DerivedT> static
   manifest.type = getType<DerivedT>();
   manifest.ports = DerivedT::providedPorts();
   manifest.registration_ID = registration_ID;
-  const auto& basic_ports = RosSubscriberNode< typename DerivedT::MessageType>::providedPorts();
+  const auto& basic_ports =
+    RosSubscriberNode< typename DerivedT::MessageType>::providedPorts();
   manifest.ports.insert( basic_ports.begin(), basic_ports.end() );
 
   factory.registerBuilder( manifest, builder );

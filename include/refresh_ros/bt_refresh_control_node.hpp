@@ -15,7 +15,8 @@ namespace BT
 
             ReFRESH_Cost(size_t index, float& pCost, float& rCost);
 
-            ReFRESH_Cost(size_t index, const refresh_ros::ModuleEvaluate::ConstPtr& msg);
+            ReFRESH_Cost(size_t index,
+                        const refresh_ros::ModuleEvaluate::ConstPtr& msg);
 
             inline void setPerformanceWeight(float& pWeight)
             {
@@ -93,9 +94,12 @@ namespace BT
     class ReFRESH_Decider : public ControlNode
     {
         public:
-            ReFRESH_Decider(const std::string& name, const BT::NodeConfiguration& config):
+            ReFRESH_Decider(const std::string& name,
+                            const BT::NodeConfiguration& config):
                 BT::ControlNode(name, config), indActive_(-1), bestPossible_(0)
-            { nRetry_ = std::vector<unsigned int>(children_nodes_.size(), 0); }
+            {
+                nRetry_ = std::vector<unsigned int>(children_nodes_.size(), 0);
+            }
 
             virtual ~ReFRESH_Decider() override = default;
 
@@ -131,9 +135,12 @@ namespace BT
     class ReFRESH_Reactor : public ControlNode
     {
         public:
-            ReFRESH_Reactor(const std::string& name, const BT::NodeConfiguration& config):
+            ReFRESH_Reactor(const std::string& name,
+                            const BT::NodeConfiguration& config):
                 BT::ControlNode(name, config), indActive_(-1), bestPossible_(0)
-            { nRetry_ = std::vector<unsigned int>(children_nodes_.size(), 0); }
+            {
+                nRetry_ = std::vector<unsigned int>(children_nodes_.size(), 0);
+            }
 
             virtual ~ReFRESH_Reactor() override = default;
 

@@ -53,12 +53,13 @@ public:
       OutputPort<int>("sum") };
   }
 
-  void sendRequest(RequestType& request) override
+  bool sendRequest(RequestType& request) override
   {
     getInput("first_int", request.a);
     getInput("second_int", request.b);
     expected_result_ = request.a + request.b;
     ROS_INFO("AddTwoInts: sending request");
+    return true;
   }
 
   NodeStatus onResponse(const ResponseType& rep) override

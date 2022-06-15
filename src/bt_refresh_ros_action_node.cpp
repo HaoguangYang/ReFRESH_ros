@@ -27,10 +27,13 @@ namespace BT
         return NodeStatus::SUCCESS;
     }
 
-    void ReFrESH_ROS_ES_node::sendRequest(RequestType& request)
+    bool ReFrESH_ROS_ES_node::sendRequest(RequestType& request)
     {
-        // TODO: currently the request is empty. Do we need to change the req format?
-        return;
+        if( !getInput<std::string>("action_request", request.action_request) )
+            return false;
+        if ( !getInput<std::string>("arguments", request.arguments) )
+            return false;
+        return true;
     }
 
     BT::NodeStatus ReFrESH_ROS_ES_node::onResponse(const ResponseType& rep)

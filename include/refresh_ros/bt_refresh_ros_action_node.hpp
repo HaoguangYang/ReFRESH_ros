@@ -8,7 +8,8 @@
 
 namespace BT
 {
-    class ReFRESH_ROS_EX_node :  public RosActionNode<refresh_ros::HighLevelRequestAction>
+    class ReFRESH_ROS_EX_node :
+        public RosActionNode<refresh_ros::HighLevelRequestAction>
     {
         public:
 
@@ -16,7 +17,8 @@ namespace BT
                 ros::NodeHandle& handle,
                 const std::string& node_name,
                 const NodeConfiguration & conf) :
-                RosActionNode<refresh_ros::HighLevelRequestAction>(handle, node_name, conf)
+                RosActionNode<refresh_ros::HighLevelRequestAction>
+                    (handle, node_name, conf)
             {}
 
             static PortsList providedPorts()
@@ -35,13 +37,15 @@ namespace BT
     class ActionEvaluatorNode : public BT::StatefulActionNode
     {
         protected:
-            ActionEvaluatorNode(const std::string& name, const BT::NodeConfiguration& conf):
+            ActionEvaluatorNode(const std::string& name,
+                                const BT::NodeConfiguration& conf):
                 BT::StatefulActionNode(name, conf)
             {}
 
         public:
             using ActionType = ActionT;
-            using FeedbackType = typename ActionT::_action_feedback_type::_feedback_type::ConstPtr;
+            using FeedbackType = typename
+                ActionT::_action_feedback_type::_feedback_type::ConstPtr;
 
             ActionEvaluatorNode() = delete;
 
@@ -64,7 +68,9 @@ namespace BT
             {
                 BT::Result fbRes;
                 if ( !(fbRes = getInput<FeedbackType>("feedback", fb_)))
-                    throw(BT::RuntimeError("Action Evaluator Node missing required input [feedback]: ", fbRes.error()));
+                    throw(BT::RuntimeError(
+                        "Action Evaluator Node missing required input [feedback]: ",
+                        fbRes.error()));
                 BT::NodeStatus status = spinOnce();
                 setOutput("performance_cost", pCost_);
                 setOutput("resource_cost", rCost_);
@@ -101,7 +107,8 @@ namespace BT
     void RegisterActionEvaluator(BT::BehaviorTreeFactory& factory,
                         const std::string& registration_ID)
     {
-        NodeBuilder builder = [](const std::string& name, const NodeConfiguration& config) {
+        NodeBuilder builder = [](const std::string& name,
+                                const NodeConfiguration& config) {
             return std::make_unique<DerivedT>( name, config );
         };
 
@@ -109,38 +116,49 @@ namespace BT
         manifest.type = getType<DerivedT>();
         manifest.ports = DerivedT::providedPorts();
         manifest.registration_ID = registration_ID;
-        const auto& basic_ports = ActionEvaluatorNode< typename DerivedT::ActionType >::providedPorts();
+        const auto& basic_ports =
+            ActionEvaluatorNode< typename DerivedT::ActionType >::providedPorts();
         manifest.ports.insert( basic_ports.begin(), basic_ports.end() );
 
         factory.registerBuilder( manifest, builder );
     }
 
-    class ReFRESH_ROS_EV_node : public ActionEvaluatorNode<refresh_ros::HighLevelRequestAction>
+    class ReFRESH_ROS_EV_node :
+        public ActionEvaluatorNode<refresh_ros::HighLevelRequestAction>
     {
         public:
-            ReFRESH_ROS_EV_node( const std::string& name, const NodeConfiguration & conf):
-                ActionEvaluatorNode<refresh_ros::HighLevelRequestAction>(name, conf) {}
+            ReFRESH_ROS_EV_node( const std::string& name,
+                                const NodeConfiguration & conf):
+                ActionEvaluatorNode<refresh_ros::HighLevelRequestAction>
+                    (name, conf)
+            {}
 
             virtual BT::NodeStatus spinOnce() override;
     };
 
-    class ReFrESH_ROS_ES_node : public RosServiceNode<refresh_ros::ModuleEstimate>
+    class ReFrESH_ROS_ES_node :
+        public RosServiceNode<refresh_ros::ModuleEstimate>
     {
         public:
-            ReFrESH_ROS_ES_node( ros::NodeHandle& handle, const std::string& name, const NodeConfiguration & conf):
-                RosServiceNode<refresh_ros::ModuleEstimate>(handle, name, conf) {}
+            ReFrESH_ROS_ES_node( ros::NodeHandle& handle,
+                                const std::string& name,
+                                const NodeConfiguration & conf):
+                RosServiceNode<refresh_ros::ModuleEstimate>(handle, name, conf)
+            {}
 
             /// These ports will be added automatically if this Node is
             /// registered using RegisterReFRESH_EV<DeriveClass>()
             static PortsList providedPorts()
             {
                 return {
+                    InputPort<std::string>("action_request"),
+                    InputPort<std::string>("arguments"),
                     OutputPort<float>("performance_cost"),
                     OutputPort<float>("resource_cost")
                 };
             }
 
-            virtual void sendRequest(RequestType& request) override;
+            virtual bool sendRequest(RequestType& request) override;
 
             virtual NodeStatus onResponse(const ResponseType& rep) override;
     };

@@ -28,12 +28,15 @@ add_message_files(
   StatusChangeLog.msg
   TreeNode.msg
   ModuleEvaluate.msg
+  ReFRESHrequest.msg
+  ReFRESHtelemetry.msg
 )
 
 add_service_files(
    FILES
    AddTwoInts.srv
    ModuleEstimate.srv
+   ModuleControl.srv
  )
 
 add_action_files(
