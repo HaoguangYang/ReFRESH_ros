@@ -1,4 +1,5 @@
 #include <ros/ros.h>
+#include <dynamic_reconfigure/server.h>
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/loggers/bt_zmq_publisher.h"
@@ -6,6 +7,7 @@
 #include "refresh_ros/bt_refresh_module_node.hpp"
 #include "refresh_ros/bt_refresh_control_node.hpp"
 #include "refresh_ros/ModuleControl.h"
+#include "refresh_ros/TaskBehaviortreeEngineConfig.h"
 
 class TaskBehaviortreeEngine
 {
@@ -24,6 +26,11 @@ class TaskBehaviortreeEngine
         blackboard_ = BT::Blackboard::create();
         status_ = BT::NodeStatus::RUNNING;
         terminalStateNotified_ = false;
+        controlServer_ = handle.advertiseService("ReFRESH/"+ros::this_node::getName()+"/module_control",
+                                                &TaskBehaviortreeEngine::controlCb, this);
+        dynamic_reconfigure::Server<refresh_ros::TaskBehaviortreeEngineConfig>::CallbackType recfgCb_ = 
+            boost::bind(&TaskBehaviortreeEngine::reconfigCb, this, ::_1, ::_2);
+        recfgServer_.setCallback(recfgCb_);
     }
 
     TaskBehaviortreeEngine() = delete;
@@ -31,6 +38,18 @@ class TaskBehaviortreeEngine
     virtual ~TaskBehaviortreeEngine()
     {
         delete(guiTracker_);
+    }
+
+    bool controlCb(refresh_ros::ModuleControl::Request &req,
+                    refresh_ros::ModuleControl::Response &res)
+    {
+        return true;
+    }
+
+    void reconfigCb(refresh_ros::TaskBehaviortreeEngineConfig &config,
+                    uint32_t level)
+    {
+        return;
     }
 
     void halt()
@@ -107,7 +126,9 @@ class TaskBehaviortreeEngine
 
     std::chrono::microseconds sleep_us_;
 
-    ros::Subscriber haltSub_;
+    ros::ServiceServer controlServer_;
+
+    dynamic_reconfigure::Server<refresh_ros::TaskBehaviortreeEngineConfig> recfgServer_;
 };
 
 int main(int argc, char **argv) 

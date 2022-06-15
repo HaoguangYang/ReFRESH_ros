@@ -14,7 +14,8 @@ set(ROS_DEPENDENCIES
     behaviortree_cpp_v3
     actionlib_msgs
     actionlib
-    message_generation)
+    message_generation
+    dynamic_reconfigure)
 
 find_package(catkin REQUIRED COMPONENTS ${ROS_DEPENDENCIES} )
 find_package(GTest)
@@ -54,6 +55,11 @@ generate_messages(
   actionlib_msgs
 )
 
+#add dynamic reconfigure
+generate_dynamic_reconfigure_options(
+  cfg/TaskBehaviortreeEngine.cfg
+)
+
 catkin_package(
     INCLUDE_DIRS include
     LIBRARIES
@@ -81,7 +87,7 @@ target_link_libraries(ReFRESHcontrolNode ${catkin_LIBRARIES})
 # Task BT engine
 
 add_executable(ReFRESH_ROS_TaskBT_Engine src/task_bt_engine.cpp)
-add_dependencies(ReFRESH_ROS_TaskBT_Engine ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(ReFRESH_ROS_TaskBT_Engine ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencfg)
 target_link_libraries(ReFRESH_ROS_TaskBT_Engine
     ${catkin_LIBRARIES}
     ReFRESHmoduleNode
