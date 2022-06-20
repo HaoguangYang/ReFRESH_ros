@@ -7,7 +7,10 @@
 #include "refresh_ros/bt_refresh_module_node.hpp"
 #include "refresh_ros/bt_refresh_control_node.hpp"
 #include "refresh_ros/ModuleControl.h"
+#include "refresh_ros/ReFRESHrequest.h"
+#include "refresh_ros/ReFRESHtelemetry.h"
 #include "refresh_ros/TaskBehaviortreeEngineConfig.h"
+#include "std_msgs/Time.h"
 
 class TaskBehaviortreeEngine
 {
@@ -15,7 +18,6 @@ class TaskBehaviortreeEngine
     
     TaskBehaviortreeEngine(ros::NodeHandle& handle)
     {
-        nh_ = &handle;
         // Register nodes
         BT::RegisterRosAction<BT::ReFRESH_ROS_EX_node>(factory_, "ReFRESH_ROS_EX", handle);
         BT::RegisterActionEvaluator<BT::ReFRESH_ROS_EV_node>(factory_, "ReFRESH_ROS_EV");
@@ -23,9 +25,16 @@ class TaskBehaviortreeEngine
         factory_.registerNodeType<BT::ReFRESH_Module>("ReFRESH_Module");
         factory_.registerNodeType<BT::ReFRESH_Decider>("ReFRESH_Decider");
         factory_.registerNodeType<BT::ReFRESH_Reactor>("ReFRESH_Reactor");
+
+        // Behaviortree utilities
         blackboard_ = BT::Blackboard::create();
         status_ = BT::NodeStatus::RUNNING;
         terminalStateNotified_ = false;
+        guiTracker_ = new BT::PublisherZMQ(tree_);
+        bt_file_ = "";
+
+        // ROS utilities
+        nh_ = &handle;
         controlServer_ = handle.advertiseService("ReFRESH/"+ros::this_node::getName()+"/module_control",
                                                 &TaskBehaviortreeEngine::controlCb, this);
         dynamic_reconfigure::Server<refresh_ros::TaskBehaviortreeEngineConfig>::CallbackType recfgCb_ = 
@@ -40,37 +49,83 @@ class TaskBehaviortreeEngine
         delete(guiTracker_);
     }
 
+    inline void halt()
+    {
+        tree_.rootNode() -> halt();
+        status_ = BT::NodeStatus::IDLE;
+    }
+
     bool controlCb(refresh_ros::ModuleControl::Request &req,
                     refresh_ros::ModuleControl::Response &res)
     {
+        if (req.request.stamp.toNSec() < lastControlStamp_.toNSec() ||
+            req.request.module != ros::this_node::getName())
+        {
+            // do nothing
+            res.status.stamp = ros::Time::now();
+            res.status.module = ros::this_node::getName();
+            res.status.status = statusMap_[tree_.rootNode()->status()];
+            return true;
+        }
+        lastControlStamp_ = req.request.stamp;
+        switch (req.request.request)
+        {
+            case refresh_ros::ReFRESHrequest::SPAWN:
+            case refresh_ros::ReFRESHrequest::ON:
+                status_ = BT::NodeStatus::RUNNING;
+                break;
+            
+            case refresh_ros::ReFRESHrequest::WAKEUP:
+                status_ = tree_.tickRoot();
+                break;
+
+            case refresh_ros::ReFRESHrequest::OFF:
+            case refresh_ros::ReFRESHrequest::TERM:
+            case refresh_ros::ReFRESHrequest::KILL:
+                halt();
+                break;
+
+            case refresh_ros::ReFRESHrequest::CLEAR:
+                status_ = BT::NodeStatus::IDLE;
+                break;
+
+            case refresh_ros::ReFRESHrequest::REINIT:
+                std::cout << "Reinitializing mission file: " << bt_file_ << std::endl;
+                halt();
+                // TODO: if invalid tree / file, use an empty tree.
+                tree_ = factory_.createTreeFromFile(bt_file_, blackboard_);
+                status_ = BT::NodeStatus::RUNNING;
+                delete(guiTracker_);
+                guiTracker_ = new BT::PublisherZMQ(tree_);
+                break;
+
+            default:
+                // do nothing
+                break;
+        }
+        res.status.stamp = ros::Time::now();
+        res.status.module = ros::this_node::getName();
+        res.status.status = statusMap_[tree_.rootNode()->status()];
         return true;
     }
 
     void reconfigCb(refresh_ros::TaskBehaviortreeEngineConfig &config,
                     uint32_t level)
     {
+        if (level & 0x1)
+        {
+            // needs to rebuild the behavior tree
+            bt_file_ = config.mission_file;
+            std::cout << "Using mission file: " << bt_file_ << std::endl;
+            halt();
+            // TODO: if invalid tree / file, use an empty tree.
+            tree_ = factory_.createTreeFromFile(bt_file_, blackboard_);
+            status_ = BT::NodeStatus::RUNNING;
+            delete(guiTracker_);
+            guiTracker_ = new BT::PublisherZMQ(tree_);
+        }
+        sleep_us_ = std::chrono::microseconds((unsigned int)(1000000/config.tick_frequency));
         return;
-    }
-
-    void halt()
-    {
-        tree_.rootNode() -> halt();
-    }
-
-    void assemble()
-    {
-        // TODO: make them dynamically reconfigurable
-        std::string bt_file;
-        ros::param::get("mission_file", bt_file);
-        std::cout << "Using mission file: " << bt_file << std::endl;
-
-        double frequency;
-        ros::param::get("tick_frequency", frequency);
-        sleep_us_ = std::chrono::microseconds((unsigned int)(1000000/frequency));
-
-        tree_ = factory_.createTreeFromFile(bt_file, blackboard_);
-        delete(guiTracker_);
-        guiTracker_ = new BT::PublisherZMQ(tree_);
     }
 
     void spin()
@@ -106,6 +161,7 @@ class TaskBehaviortreeEngine
                     break;
             }
         }
+        halt();
     }
 
     protected:
@@ -124,11 +180,22 @@ class TaskBehaviortreeEngine
 
     BT::Blackboard::Ptr blackboard_;
 
+    std::string bt_file_;
+
     std::chrono::microseconds sleep_us_;
 
     ros::ServiceServer controlServer_;
 
+    std_msgs::Time::_data_type lastControlStamp_;
+
     dynamic_reconfigure::Server<refresh_ros::TaskBehaviortreeEngineConfig> recfgServer_;
+
+    std::unordered_map<BT::NodeStatus, refresh_ros::ReFRESHtelemetry::_status_type> statusMap_ = {
+        {BT::NodeStatus::IDLE, refresh_ros::ReFRESHtelemetry::READY},
+        {BT::NodeStatus::RUNNING, refresh_ros::ReFRESHtelemetry::RUNNING},
+        {BT::NodeStatus::SUCCESS, refresh_ros::ReFRESHtelemetry::OFF},
+        {BT::NodeStatus::FAILURE, refresh_ros::ReFRESHtelemetry::ERROR}
+    };
 };
 
 int main(int argc, char **argv) 
