@@ -102,9 +102,9 @@ add_executable(test_bt test/test_bt.cpp)
 add_dependencies(test_bt ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(test_bt ${catkin_LIBRARIES} )
 
-add_executable(test_server test/test_server.cpp)
-add_dependencies(test_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(test_server ${catkin_LIBRARIES} )
+add_executable(test_bt_server test/test_server.cpp)
+add_dependencies(test_bt_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(test_bt_server ${catkin_LIBRARIES} )
 
 ######################################################
 # INSTALL
