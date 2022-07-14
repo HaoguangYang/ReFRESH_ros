@@ -92,8 +92,13 @@ class TaskBehaviortreeEngine
             case refresh_ros::ReFRESHrequest::REINIT:
                 std::cout << "Reinitializing mission file: " << bt_file_ << std::endl;
                 halt();
-                // TODO: if invalid tree / file, use an empty tree.
-                tree_ = factory_.createTreeFromFile(bt_file_, blackboard_);
+                // if invalid tree / file, use an empty tree.
+                try {
+                    tree_ = factory_.createTreeFromFile(bt_file_, blackboard_);
+                } catch (...) {
+                    std::cout << "Error occured creating tree from file: " << bt_file_ << "! Using an EMPTY TREE instead." << std::endl;
+                    tree_ = factory_.createTreeFromText(empty_tree_xml_, blackboard_);
+                }
                 status_ = BT::NodeStatus::RUNNING;
                 delete(guiTracker_);
                 guiTracker_ = new BT::PublisherZMQ(tree_);
@@ -118,8 +123,13 @@ class TaskBehaviortreeEngine
             bt_file_ = config.mission_file;
             std::cout << "Using mission file: " << bt_file_ << std::endl;
             halt();
-            // TODO: if invalid tree / file, use an empty tree.
-            tree_ = factory_.createTreeFromFile(bt_file_, blackboard_);
+            // if invalid tree / file, use an empty tree.
+            try {
+                tree_ = factory_.createTreeFromFile(bt_file_, blackboard_);
+            } catch (...) {
+                std::cout << "Error occured creating tree from file: " << bt_file_ << "! Using an EMPTY TREE instead." << std::endl;
+                tree_ = factory_.createTreeFromText(empty_tree_xml_, blackboard_);
+            }
             status_ = BT::NodeStatus::RUNNING;
             delete(guiTracker_);
             guiTracker_ = new BT::PublisherZMQ(tree_);
@@ -196,6 +206,12 @@ class TaskBehaviortreeEngine
         {BT::NodeStatus::SUCCESS, refresh_ros::ReFRESHtelemetry::OFF},
         {BT::NodeStatus::FAILURE, refresh_ros::ReFRESHtelemetry::ERROR}
     };
+
+    const std::string empty_tree_xml_ = R"(
+        <root main_tree_to_execute = "MainTree">
+            <BehaviorTree ID="MainTree"/>
+        </root>
+        )";
 };
 
 int main(int argc, char **argv) 
@@ -203,6 +219,10 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "high_level_task_runner");
     ros::NodeHandle nh;
 
+    TaskBehaviortreeEngine bTreeLevel(nh);
+    bTreeLevel.spin();
+
+    /*
     BT::BehaviorTreeFactory factory;
 
     // Register nodes
@@ -246,5 +266,7 @@ int main(int argc, char **argv)
         status_str = "FAILURE";
     }
     ROS_INFO("Exit with status %s.", status_str.c_str());
+    */
+
     return 0;
 }
