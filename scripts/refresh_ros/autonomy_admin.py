@@ -4,23 +4,28 @@ import rospy
 from .ReFRESH_ros_utils import *
 from .ReFRESH_ros import *
 import rospkg
-import xml.etree.ElementTree as ET
+#import xml.etree.ElementTree as ET
 import owlready2 as owl
+from refresh_ros.msg import HighLevelRequestAction
+from refresh_ros.srv import ModuleEstimate
+import actionlib
 
 class ModuleOntologyEngine():
-    def __init__(self, launcher, onto):
+    def __init__(self, launcher):
         # xml parse onto
-        xmlStruct = ET.parse(onto)
+        # why not use yaml and conform to the rosparam scheme?
+        #xmlStruct = ET.parse(config)
+        mList = rospy.get_param("~register_module",[])
         self.moduleInstances = []
-        for item in xmlStruct.findall('register_module'):
-            pkgName = item.get('package')
-            libName = item.get('module_name')
+        for item in mList:
+            pkgName = item['package']
+            libName = item['module_name']
             try:
                 rospkg.RosPack().get_path(pkgName)
             except Exception as e:
                 # this returns with exception
                 print(e)
-                raise("ERROR: Package not found, invoked in file: "+onto)
+                raise("ERROR: Package "+pkgName+" not found")
             try:
                 # bad practice... can be cleaned up if using ROS2 + lifecycle
                 mod = __import__(libName, fromlist=[pkgName])
@@ -28,14 +33,24 @@ class ModuleOntologyEngine():
             except Exception as e:
                 print(e)
                 raise("ERROR: Module "+libName+" not found or ill-formed in package: "+pkgName)
+        # ReFRESH manager for all descending modules
         self.moduleManager = Manager(launcher, self.moduleInstances, "ReFRESH_ROS_Module_Manager")
-        # TODO:
         # start ontology reasoner by loading ontology into owlready2
-        # start service that listens to high-level action demands
+        onto_file = rospy.get_param("~runtime_ontology")
+        if os.path.exists(onto_file):
+            self.onto = owl.get_ontology(onto_file).load()
+        else:
+            raise("ERROR: Runtime ontology "+onto_file+" not found")
+        # start action server that listens to high-level action demands, resolve demands with ontology,
+        # and feeds back real-time action-level performance and resource evaluation.
+        self.highLevelActionServer = actionlib.SimpleActionServer("refresh_ros/high_level_action",
+            HighLevelRequestAction, exec_cb = self.resolveAndRunHighLevelAction, auto_start=False)
         # start service that listens to Estimation requests
-        # start publisher that publishes overall module-level performance Evaluation
+        self.highLevelEstimationServer = rospy.Service("refresh_ros/high_level_action_estimate",
+            ModuleEstimate, self.synthHighLevelES)
 
-    def resolveHighLevelDemands(self):
+    def resolveAndRunHighLevelAction(self, goal):
+        # TODO: runtime evaluation is provided as the feedback.
         pass
 
     def synthHighLevelES(self):
@@ -45,16 +60,16 @@ class ModuleOntologyEngine():
         pass
 
     def shutdown(self):
-        pass
+        self.moduleManager.shutdown()
 
     def run(self, blocking=True):
-        pass
+        self.moduleManager.run(blocking = blocking)
 
 if __name__ == "__main__":
     # main thread for runtime self adaptation autonomy
     core = Launcher("RunTimeInfrastructure")
     # attach module ontology engine with core
-    moduleOntoMan = ModuleOntologyEngine(core, onto=rospy.get_param("~module_description"))
+    moduleOntoMan = ModuleOntologyEngine(core)#, config=rospy.get_param("~module_description"))
     # start monitoring utilities
     #telemetryThread = core.launch(...)
     # start task behavior tree level with core

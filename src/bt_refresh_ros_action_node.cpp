@@ -2,15 +2,16 @@
 
 namespace BT
 {
-    bool ReFRESH_ROS_EX_node::sendGoal(GoalType& goal){
-        if( !getInput<std::string>("action_request", goal.action_request) )
+    bool ReFRESH_ROS_EX_node::sendGoal(GoalType &goal)
+    {
+        if (!getInput<std::string>("action_request", goal.action_request))
         {
-            // abourt the entire action. Result in a FAILURE
+            // abort the entire action. Result in a FAILURE
             return false;
         }
-        if( !getInput<std::string>("arguments", goal.arguments) )
+        if (!getInput<std::string>("arguments", goal.arguments))
         {
-            // abourt the entire action. Result in a FAILURE
+            // abort the entire action. Result in a FAILURE
             return false;
         }
         return true;
@@ -27,16 +28,16 @@ namespace BT
         return NodeStatus::SUCCESS;
     }
 
-    bool ReFrESH_ROS_ES_node::sendRequest(RequestType& request)
+    bool ReFrESH_ROS_ES_node::sendRequest(RequestType &request)
     {
-        if( !getInput<std::string>("action_request", request.action_request) )
+        if (!getInput<std::string>("action_request", request.action_request))
             return false;
-        if ( !getInput<std::string>("arguments", request.arguments) )
+        if (!getInput<std::string>("arguments", request.arguments))
             return false;
         return true;
     }
 
-    BT::NodeStatus ReFrESH_ROS_ES_node::onResponse(const ResponseType& rep)
+    BT::NodeStatus ReFrESH_ROS_ES_node::onResponse(const ResponseType &rep)
     {
         setOutput("performance_cost", rep.estimate.performanceCost);
         setOutput("resource_cost", rep.estimate.resourceCost);
