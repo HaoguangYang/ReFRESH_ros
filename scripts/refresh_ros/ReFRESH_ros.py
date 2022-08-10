@@ -593,20 +593,24 @@ class Manager:
             break
         self.lock.release()
         self.bottleNeck = bottleNeck
-        if toOn and toOff:
+        # pending operation list is not empty. Go ahead and change module on/off status.
+        if toOff:
             self.turnOff(toOff)
+        if toOn:
             # you may have a bunch of things resumed after a preemptive module is off, so double check here.
             isOn = self.moduleIsOn(toOn)
             if not isOn:
                 self.turnOn(toOn)
+        if toOff or toOn:
             time.sleep(self.DeciderCooldownDuration)
 
     """ Starts decider object """
     def run(self, blocking:bool = False):
-        self.Decider_proc = self.launcher.launch(self.Decider.ftype, \
+        if not self.Decider_proc:
+            self.Decider_proc = self.launcher.launch(self.Decider.ftype, \
                                                 *tuple(self.Decider.args), \
                                                 **dict(self.Decider.kwargs))
-        print("INFO: Launched decider thread.")
+            print("INFO: Launched decider thread.")
         if blocking:
             self.launcher.spin()
 
