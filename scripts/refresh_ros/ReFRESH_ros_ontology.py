@@ -1,86 +1,50 @@
 #!/usr/bin/python
 """
-ReFrESH module that runs on ROS
-v0.2.1
-Author: Haoguang Yang
-Change Log:
-v0.1        09/26/2021      First implementation based on SMACH.
-v0.2.0      03/09/2022      Refactoring the code to use without SMACH for better efficiency.
-v0.2.1      03/11/2022      Support multi-threaded EX, EV, ES. Support normalization within 
-                            reconfig metric class. Support prioritized tasks and preemption.
-v0.2.2      03/13/2022      Separated utilities to a separate script. Added handle to access
-                            manager and EX/EV/ES processes within the module. Added WiFi and
-                            CPU/Memory utilization monitors for modules.
-v0.2.3      04/01/2022      Added support for pre- and post- functions for each components.
-                            Made TF buffer with registered listener available to managers.
 
-Reconfiguration Framework for distributed Embedded systems on Software and Hardware
-Originally designed to run on FPGA, the script brings self-adaptation to robots running Linux
-and ROS. Specifically, the triplet EX/EV/ES are enforced in a functional module, with their
-states managed by a performance- and resource-aware decider.
-
-Reference for the original work:
-Cui, Y., Voyles, R. M., Lane, J. T., Krishnamoorthy, A., & Mahoor, M. H. (2015). A mechanism
-for real-time decision making and system maintenance for resource constrained robotic systems
-through ReFrESH. Autonomous Robots, 39(4), 487-502.
 """
 
-from typing import Literal
 import rospy
 import sys
 import time
 import numpy as np
 from .ReFRESH_ros_utils import *
+import ReFRESH_ros as refresh
+import owlready2 as owl
 
-"""
-Element of a thread in a ReFrESH module
-"""
-class ModuleComponent:
-    def __init__(self, ftype=Ftype.THREAD, args:tuple=(), kwargs:dict={},
-                    pre:callable=lambda : None, post:callable=lambda : None):
-        self.ftype = ftype
-        self.pre = pre
-        self.post = post
-        self.args = args
-        self.kwargs = kwargs
+refresh_module_level = owl.get_ontology("file:///home/Dev/gazebo_ws/src/omniveyor/ReFRESH_ros/resources/ontology/refresh_module_level.owl").load()
 
-def setComponentProperties(comp, ftype:Literal, ns:str='', exec:callable=None,
-                            args:tuple=(), mType:type=None, kwargs:dict={},
-                            pre:callable=lambda:None, post:callable=lambda:None):
-    comp.ftype = ftype
-    comp.pre = pre
-    comp.post = post
-    if comp.ftype == Ftype.NODE:
-        comp.args = ()
-        comp.kwargs = {'pkgName': ns, 'execName': exec, 'args': args, **kwargs}
-    elif comp.ftype == Ftype.LAUNCH_FILE:
-        comp.args = ()
-        comp.kwargs = {'pkgName': ns, 'fileName': exec, 'args': args, **kwargs}
-    elif comp.ftype == Ftype.THREAD:
-        comp.args = ()
-        comp.kwargs = {'funcPtr': exec, 'args': args}
-    elif comp.ftype == Ftype.TIMER:
-        comp.args = ()
-        comp.kwargs = {'cb': exec, **kwargs}
-    elif comp.ftype == Ftype.SUBSCRIBER:
-        comp.args = ()
-        comp.kwargs = {'topic': ns, 'msgType': mType, 'cb': exec, 'args': args}
-    elif comp.ftype == Ftype.SERVICE:
-        comp.args = ()
-        comp.kwargs = {'topic': ns, 'srvType': mType, 'cb': exec}
-    elif comp.ftype == Ftype.ACTION_SRV:
-        comp.args = ()
-        comp.kwargs = {'topic': ns, 'actType': mType, 'cb': exec, **kwargs}
-    elif comp.ftype == Ftype.ACTION_CLI:
-        comp.args = ()
-        comp.kwargs = {'topic': ns, 'actType': mType, 'feedback_cb': exec, **kwargs}
-    elif comp.ftype == Ftype.CALLABLE:
-        comp.args = (exec,)
-        comp.kwargs = {}
-    else:
-        print("ERROR: type not implemented.")
-        comp.args = ()
-        comp.kwargs = {}
+with refresh_module_level:
+    """
+    Element of a thread in a ReFrESH module
+    """
+    class ModuleComponent(owl.Thing):
+        executionState = "UNCONFIGURED"
+        
+        def setComponentProperties(self, ftype:str, ns:str="", exec:callable=None,
+                                args:tuple=(), mType:type=None, kwargs:dict={},
+                                pre:callable=lambda:None, post:callable=lambda:None):
+            self.impl = refresh.ModuleComponent()
+            refresh.setComponentProperties(self.impl, Ftype[ftype], ns, exec, args, mType, kwargs, pre, post)
+            self.executableType = ftype
+            self.executionState = "INACTIVE"
+
+    class Module(owl.Thing):
+        executionState = "UNCONFIGURED"
+        
+        def setComponents(self):
+            self.impl = refresh.ReFrESH_Module(self.get_name(), EX_thread=0, EV_thread=0, ES_thread=0)
+            self.impl.EX = [ex.impl for ex in self.isExecutedBy]
+            self.impl.EV = [ev.impl for ev in self.isEvaluatedBy]
+            self.impl.ES = [es.impl for es in self.isEstimatedBy]
+        
+        def register(self, handle):
+            self.impl.register(handle)
+
+    class TestExecutor(refresh_module_level.Executor):
+        pass
+
+    class TestModule(refresh_module_level.Module):
+        pass
 
 """
 Basic metrics class for deciding reconfiguration
@@ -131,107 +95,6 @@ class ReconfigureMetric:
         return max([self.performanceUtil, self.resourceUtil])
 
 """
-The base class of a ReFrESH module
-"""
-class ReFrESH_Module:
-    def __init__(self, name:str, priority:int=0, preemptive:bool=False,
-                EX_thread:int=1, EV_thread:int=1, ES_thread:int=1):
-        self.name = name
-        # the higher priority, the more important.
-        self.priority = priority
-        """preemptive: This module suspends all other modules in the enabled list
-        that has lower priority, until finished"""
-        self.preemptive = preemptive
-        self.managerHandle:Manager = None
-        self.lock = threading.Lock()
-        self.EX_thread = EX_thread
-        self.EV_thread = EV_thread
-        self.ES_thread = ES_thread
-        """The unified reconfiguration metric is updated by the EV (module ON) or ES (module OFF)"""
-        self.reconfigMetric = ReconfigureMetric()
-        self.EX = [ModuleComponent() for i in range(self.EX_thread)]
-        self.EV = [ModuleComponent() for i in range(self.EV_thread)]
-        self.ES = [ModuleComponent() for i in range(self.ES_thread)]
-
-    """
-    Helper function to set the property of a thread
-    which:  either EX, EV, or ES
-    ftype:  enumerated thread function type (Ftype)
-    ns:     topic or package name, depending on the context. String
-    exec:   function pointer
-    args:   arguments of the function pointer. Tuple
-    mType:  message/service/action type depending on the context
-    kwargs: Keyword arguments. Dict
-    ind:    thread index within the list (0..*_thread-1)
-    """
-    def setComponent(self, which, ftype, ns:str='', exec:callable=None,
-                                args:tuple=(), mType:type=None, kwargs:dict={},
-                                pre:callable=lambda:None, post:callable=lambda:None, ind:int=0):
-        this = None
-        if (which in ['EX', 'ex', 'Execute', 'execute', 'Executor', 'executer', self.EX]):
-            this = self.EX[ind]
-        elif (which in ['EV', 'ev', 'Evaluate', 'evaluate', 'Evaluator', 'evaluator', self.EV]):
-            this = self.EV[ind]
-        elif (which in ['ES', 'es', 'Estimate', 'estimate', 'Estimator', 'estimator', self.ES]):
-            this = self.ES[ind]
-        else:
-            raise TypeError("Invalid set-property request!")
-        setComponentProperties(this, ftype, ns, exec, args, mType, kwargs, pre, post)
-
-    def addComponent(self, which, ftype:Ftype, ns:str='', exec:callable=None,
-                        args:tuple=(), mType=None, kwargs:dict={},
-                        pre:callable=lambda:None, post:callable=lambda:None):
-        this = None
-        if (which in ['EX', 'ex', 'Execute', 'execute', 'Executor', 'executer', self.EX]):
-            this = self.EX
-        elif (which in ['EV', 'ev', 'Evaluate', 'evaluate', 'Evaluator', 'evaluator', self.EV]):
-            this = self.EV
-        elif (which in ['ES', 'es', 'Estimate', 'estimate', 'Estimator', 'estimator', self.ES]):
-            this = self.ES
-        else:
-            raise TypeError("Invalid set-property request!")
-        this.append(ModuleComponent())
-        self.setComponent(which, ftype, ns, exec, args, mType, kwargs, pre, post, ind=-1)
-
-    def register(self, handle):
-        self.managerHandle = handle
-
-    """Helper function to turn on the module from within"""
-    def turnMeOn(self):
-        if isinstance(self.managerHandle, Manager):
-            self.managerHandle.turnOn(self)
-        else:
-            print("ERROR: this module is not registered to a manager.")
-
-    """Helper function to turn off the module from within"""
-    def turnMeOff(self):
-        if isinstance(self.managerHandle, Manager):
-            self.managerHandle.turnOff(self)
-        else:
-            print("ERROR: this module is not registered to a manager.")
-
-    """Helper function to return EX thread handle"""
-    def getMyEXhandle(self):
-        if isinstance(self.managerHandle, Manager):
-            return self.managerHandle.getEXhandle(self)
-        else:
-            return None
-
-    """Helper function to return EV thread handle"""
-    def getMyEVhandle(self):
-        if isinstance(self.managerHandle, Manager):
-            return self.managerHandle.getEVhandle(self)
-        else:
-            return None
-
-    """Helper function to return ES thread handle"""
-    def getMyEShandle(self):
-        if isinstance(self.managerHandle, Manager):
-            return self.managerHandle.getEShandle(self)
-        else:
-            return None
-
-"""
 Base class of a module manager and decider.
 Manages a given set of modules, documenting their states being either off, ready (preempted), or on.
 Turn on or off the modules based on request, or through self adaptation using the basicDecider.
@@ -266,7 +129,7 @@ class Manager:
                 raise TypeError("Not initializing Manager", self.name, \
                                 "with the supported module class: ReFrESH_Module.")
             # register handler
-            m.register(self)
+            m.managerHandle = self
             # turn on ES
             es = []
             for th in m.ES:
