@@ -13,38 +13,51 @@ import owlready2 as owl
 
 refresh_module_level = owl.get_ontology("file:///home/Dev/gazebo_ws/src/omniveyor/ReFRESH_ros/resources/ontology/refresh_module_level.owl").load()
 
-with refresh_module_level:
-    """
-    Element of a thread in a ReFrESH module
-    """
-    class ModuleComponent(owl.Thing):
-        executionState = "UNCONFIGURED"
-        
-        def setComponentProperties(self, ftype:str, ns:str="", exec:callable=None,
-                                args:tuple=(), mType:type=None, kwargs:dict={},
-                                pre:callable=lambda:None, post:callable=lambda:None):
-            self.impl = refresh.ModuleComponent()
-            refresh.setComponentProperties(self.impl, Ftype[ftype], ns, exec, args, mType, kwargs, pre, post)
-            self.executableType = ftype
-            self.executionState = "INACTIVE"
+class Performance(owl.Thing):
+    namespace = refresh_module_level
+    rawPerformanceDict = {}
+    worstCasePerformanceLimit = {}
 
-    class Module(owl.Thing):
-        executionState = "UNCONFIGURED"
-        
-        def setComponents(self):
-            self.impl = refresh.ReFrESH_Module(self.get_name(), EX_thread=0, EV_thread=0, ES_thread=0)
-            self.impl.EX = [ex.impl for ex in self.isExecutedBy]
-            self.impl.EV = [ev.impl for ev in self.isEvaluatedBy]
-            self.impl.ES = [es.impl for es in self.isEstimatedBy]
-        
-        def register(self, handle):
-            self.impl.register(handle)
+"""
+Element of a thread in a ReFrESH module
+"""
+class ModuleComponent(owl.Thing):
+    namespace = refresh_module_level
+    executionState = "UNCONFIGURED"
+    executableType = "THREAD"
+    impl = refresh.ModuleComponent()
+    
+    def setComponentProperties(self, ftype:str, ns:str="", exec:callable=None,
+                            args:tuple=(), mType:type=None, kwargs:dict={},
+                            pre:callable=lambda:None, post:callable=lambda:None):
+        refresh.setComponentProperties(self.impl, Ftype[ftype], ns, exec, args, mType, kwargs, pre, post)
+        # TODO: ROS components <--> InformationInterface <--> Performance
+        self.executableType = ftype
+        self.executionState = "INACTIVE"
+        # TODO: executionState and executableType correspondence with ontology
 
-    class TestExecutor(refresh_module_level.Executor):
-        pass
+class Module(owl.Thing):
+    namespace = refresh_module_level
+    executionState = "UNCONFIGURED"
+    impl = refresh.ReFrESH_Module("", EX_thread=0, EV_thread=0, ES_thread=0)
+    
+    def updateComponents(self):
+        self.impl.name = self.get_name()
+        self.impl.EX = [ex.impl for ex in self.isExecutedBy]
+        self.impl.EV = [ev.impl for ev in self.isEvaluatedBy]
+        self.impl.ES = [es.impl for es in self.isEstimatedBy]
+        self.impl.EX_thread = len(self.impl.EX)
+        self.impl.EV_thread = len(self.impl.EV)
+        self.impl.ES_thread = len(self.impl.EV)
+    
+    def register(self, handle):
+        self.impl.register(handle)
 
-    class TestModule(refresh_module_level.Module):
-        pass
+class TestExecutor(refresh_module_level.Executor):
+    namespace = refresh_module_level
+
+class TestModule(refresh_module_level.Module):
+    namespace = refresh_module_level
 
 """
 Basic metrics class for deciding reconfiguration

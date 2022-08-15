@@ -41,6 +41,15 @@
     
 
 
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#constrains -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#constrains">
+        <owl:inverseOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isConstrainedBy"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Constraint"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#deliversPerformance -->
 
     <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#deliversPerformance">
@@ -183,6 +192,7 @@
 
     <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInformationDependency">
         <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasDependency"/>
+        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInformationInterface"/>
         <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInput"/>
         <owl:inverseOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInformationDependencyOf"/>
         <rdfs:domain>
@@ -211,7 +221,7 @@
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInput -->
 
     <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInput">
-        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInformationInterface"/>
+        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInterface"/>
     </owl:ObjectProperty>
     
 
@@ -228,6 +238,7 @@
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
+        <rdfs:range rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
     </owl:ObjectProperty>
     
 
@@ -235,7 +246,7 @@
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasOutput -->
 
     <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasOutput">
-        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInformationInterface"/>
+        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInterface"/>
     </owl:ObjectProperty>
     
 
@@ -244,6 +255,7 @@
 
     <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasResourceDependency">
         <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasDependency"/>
+        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInput"/>
         <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasResourceInterface"/>
         <owl:inverseOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isResourceDependencyOf"/>
         <rdfs:domain>
@@ -256,6 +268,7 @@
             </owl:Class>
         </rdfs:domain>
         <rdfs:range rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface"/>
+        <rdfs:comment xml:lang="en">A top-level function plays the role of the &quot;plant&quot; in a control systems diagram. In other words, a top level function depicts how others observe the behavior of a system, from an external stand point. The input of a top level function is the output of the internal autonomous system, while the output of the top level function acts as a floating input to the internal autonomous system as a feedback. This is also the purpose of adding a &quot;Physical Interface&quot;, which acts as the output of a top-level function.</rdfs:comment>
     </owl:ObjectProperty>
     
 
@@ -471,7 +484,14 @@
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInvolvedIn -->
 
     <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInvolvedIn">
-        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
         <rdfs:range rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
     </owl:ObjectProperty>
     
@@ -629,6 +649,73 @@
     <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#booleanPerformanceValue">
         <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#performanceValue"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#constraintType -->
+
+    <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#constraintType">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Constraint"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first>EQUALS</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first>GREATER_OR_EQUAL_TO</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first>GREATER_THAN</rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                <rdf:first>LESS_OR_EQUAL_TO</rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                        <rdf:first>LESS_THAN</rdf:first>
+                                                        <rdf:rest>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                                                <rdf:first>NOT_EQUALS</rdf:first>
+                                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                            </rdf:Description>
+                                                        </rdf:rest>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#constraintValue -->
+
+    <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#constraintValue">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Constraint"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#boolean"/>
+                    <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#decimal"/>
+                </owl:unionOf>
+            </rdfs:Datatype>
+        </rdfs:range>
     </owl:DatatypeProperty>
     
 
@@ -800,6 +887,15 @@
     
 
 
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#rawPerformanceKey -->
+
+    <owl:DatatypeProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#rawPerformanceKey">
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Performance"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -890,13 +986,38 @@
 
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Constraint -->
 
-    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Constraint"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Constraint">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#constraintType"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#constraintValue"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onDataRange>
+                            <rdfs:Datatype>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#boolean"/>
+                                    <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#decimal"/>
+                                </owl:unionOf>
+                            </rdfs:Datatype>
+                        </owl:onDataRange>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device -->
 
     <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Object"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#providesResource"/>
@@ -1055,8 +1176,12 @@
                         <owl:someValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Performance"/>
                     </owl:Restriction>
                     <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasDependency"/>
+                        <owl:someValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasOutput"/>
-                        <owl:someValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+                        <owl:someValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isExpectedToDeliverPerformance"/>
@@ -1069,35 +1194,7 @@
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executionState"/>
                         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                        <owl:onDataRange>
-                            <rdfs:Datatype>
-                                <owl:oneOf>
-                                    <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                        <rdf:first>ABORTED</rdf:first>
-                                        <rdf:rest>
-                                            <rdf:Description>
-                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                <rdf:first>ACTIVE</rdf:first>
-                                                <rdf:rest>
-                                                    <rdf:Description>
-                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                        <rdf:first>INACTIVE</rdf:first>
-                                                        <rdf:rest>
-                                                            <rdf:Description>
-                                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                                <rdf:first>UNCONFIGURED</rdf:first>
-                                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                                                            </rdf:Description>
-                                                        </rdf:rest>
-                                                    </rdf:Description>
-                                                </rdf:rest>
-                                            </rdf:Description>
-                                        </rdf:rest>
-                                    </rdf:Description>
-                                </owl:oneOf>
-                            </rdfs:Datatype>
-                        </owl:onDataRange>
+                        <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#functionDepth"/>
@@ -1107,6 +1204,9 @@
                 </owl:intersectionOf>
             </owl:Class>
         </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">A function maps inputs to outputs in a stateless manner. The multivariate nature of functions is described with the multiple input/output interfaces. The composition of functions is described with hasFunctionalDependency relation.
+
+A decomposition of function is the interconnection between the output of child function (of lower level) and the input of the parent function (of higher level). A function can also be decomposed into interconnected modules that delivers the inputs and outputs, involved in a configuration of one specific functional level.</rdfs:comment>
     </owl:Class>
     
 
@@ -1176,6 +1276,7 @@
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationObject -->
 
     <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationObject">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Object"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isRealizedBy"/>
@@ -1204,6 +1305,7 @@
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationRealization -->
 
     <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationRealization">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#realizes"/>
@@ -1276,47 +1378,35 @@
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executionState"/>
                         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                        <owl:onDataRange>
-                            <rdfs:Datatype>
-                                <owl:oneOf>
-                                    <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                        <rdf:first>ABORTED</rdf:first>
-                                        <rdf:rest>
-                                            <rdf:Description>
-                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                <rdf:first>ACTIVE</rdf:first>
-                                                <rdf:rest>
-                                                    <rdf:Description>
-                                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                        <rdf:first>INACTIVE</rdf:first>
-                                                        <rdf:rest>
-                                                            <rdf:Description>
-                                                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
-                                                                <rdf:first>UNCONFIGURED</rdf:first>
-                                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
-                                                            </rdf:Description>
-                                                        </rdf:rest>
-                                                    </rdf:Description>
-                                                </rdf:rest>
-                                            </rdf:Description>
-                                        </rdf:rest>
-                                    </rdf:Description>
-                                </owl:oneOf>
-                            </rdfs:Datatype>
-                        </owl:onDataRange>
+                        <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </rdfs:subClassOf>
-        <rdfs:comment>A module is not directly linked to any function unless it is involved in a configuration.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Module is a term with finer granularity compared to function. Similar to Function, a module also has input and output interfaces, linking to both resource and information. A module is not directly linked to any function unless it is involved in a configuration.
+
+A module does not consider the statelessness of function, i.e., a module allows internal state variables that takes time to stabilize, evolves over the duration of a task, etc. While a function does not consider time (for its statelessness), or timeliness of response, a module is strictly real-time and does not allow any blocking actions.</rdfs:comment>
     </owl:Class>
     
 
 
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ModuleComponent -->
 
-    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ModuleComponent"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ModuleComponent">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executableType"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Object -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Object"/>
     
 
 
@@ -1327,8 +1417,17 @@
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
                     <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isConstrainedBy"/>
+                        <owl:someValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Constraint"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isCoupledWith"/>
                         <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Performance"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isMonitoredBy"/>
@@ -1336,19 +1435,32 @@
                         <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Evaluator"/>
                     </owl:Restriction>
                     <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#rawPerformanceKey"/>
+                        <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#performanceValue"/>
-                        <owl:someValuesFrom>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onDataRange>
                             <rdfs:Datatype>
                                 <owl:unionOf rdf:parseType="Collection">
                                     <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#boolean"/>
                                     <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#decimal"/>
                                 </owl:unionOf>
                             </rdfs:Datatype>
-                        </owl:someValuesFrom>
+                        </owl:onDataRange>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#PhysicalInterface -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#PhysicalInterface">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
     </owl:Class>
     
 
@@ -1405,14 +1517,15 @@
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#performanceValue"/>
-                        <owl:someValuesFrom>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onDataRange>
                             <rdfs:Datatype>
                                 <owl:unionOf rdf:parseType="Collection">
                                     <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#boolean"/>
                                     <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#decimal"/>
                                 </owl:unionOf>
                             </rdfs:Datatype>
-                        </owl:someValuesFrom>
+                        </owl:onDataRange>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
@@ -1436,9 +1549,16 @@
     
 
 
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization"/>
+    
+
+
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource -->
 
     <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isResourceProvidedBy"/>
@@ -1543,6 +1663,12 @@
         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#I">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#G">
         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
     </rdf:Description>
     <rdf:Description>
@@ -2541,6 +2667,160 @@
                         <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isEvaluatedBy"/>
                         <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
                         <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dependency of an executor is the dependency of a module.</rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ModuleDep_EXDep</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Executor"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasDependency"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executes"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasDependency"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A decomposition is allowed, when the input dependency of a parent function is the output of a child function.</rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Functional_decomposition</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#I"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasDependency"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#I"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#G"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasOutput"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#G"/>
+                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#I"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasFunctionalDependency"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#G"/>
                     </rdf:Description>
                 </rdf:first>
                 <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
