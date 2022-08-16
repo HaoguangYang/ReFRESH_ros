@@ -67,6 +67,12 @@
     
 
 
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#describes -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#describes"/>
+    
+
+
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimates -->
 
     <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimates">
@@ -251,6 +257,12 @@
     
 
 
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+    
+
+
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasResourceDependency -->
 
     <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasResourceDependency">
@@ -295,14 +307,6 @@
                 </owl:unionOf>
             </owl:Class>
         </rdfs:range>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout -->
-
-    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
     </owl:ObjectProperty>
     
 
@@ -368,6 +372,15 @@
 
     <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isCoupledWith">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isDecompositionOfFunction -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isDecompositionOfFunction">
+        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#solvesFunction"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#FunctionConfiguration"/>
     </owl:ObjectProperty>
     
 
@@ -450,6 +463,15 @@
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
         <rdfs:domain rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
         <rdfs:range rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isGroundingOfFunction -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isGroundingOfFunction">
+        <rdfs:subPropertyOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#solvesFunction"/>
+        <rdfs:domain rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ModuleConfiguration"/>
     </owl:ObjectProperty>
     
 
@@ -571,6 +593,12 @@
         <rdfs:domain rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource"/>
         <rdfs:range rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
     </owl:ObjectProperty>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isSatisfiedBy -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isSatisfiedBy"/>
     
 
 
@@ -979,7 +1007,7 @@
                 </owl:intersectionOf>
             </owl:Class>
         </rdfs:subClassOf>
-        <rdfs:comment>A configuration is a set of components or functions, that solves another function. The solution function has depth +1 from the function being solved.</rdfs:comment>
+        <rdfs:comment>A configuration is a set of components or functions, that solves another function. The solution function has depth +1 from the function being solved. A Configuration is a collection.</rdfs:comment>
     </owl:Class>
     
 
@@ -1010,6 +1038,7 @@
                 </owl:intersectionOf>
             </owl:Class>
         </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">Constraint is an Amount.</rdfs:comment>
     </owl:Class>
     
 
@@ -1204,9 +1233,30 @@
                 </owl:intersectionOf>
             </owl:Class>
         </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">A function is a social object, and is a subclass of role.</rdfs:comment>
         <rdfs:comment xml:lang="en">A function maps inputs to outputs in a stateless manner. The multivariate nature of functions is described with the multiple input/output interfaces. The composition of functions is described with hasFunctionalDependency relation.
 
 A decomposition of function is the interconnection between the output of child function (of lower level) and the input of the parent function (of higher level). A function can also be decomposed into interconnected modules that delivers the inputs and outputs, involved in a configuration of one specific functional level.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#FunctionConfiguration -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#FunctionConfiguration">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#involves"/>
+                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
+        <rdfs:comment>A function configuration is a configuration that contains only functions. It describes possible approaches to decompose a higher level function.</rdfs:comment>
     </owl:Class>
     
 
@@ -1252,23 +1302,24 @@ A decomposition of function is the interconnection between the output of child f
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface -->
 
     <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface">
-        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
-        <rdfs:subClassOf>
+        <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#describes"/>
                         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                         <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationObject"/>
                     </owl:Restriction>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isBindedToRealization"/>
-                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isSatisfiedBy"/>
+                        <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                         <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationRealization"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
-        </rdfs:subClassOf>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
     </owl:Class>
     
 
@@ -1290,14 +1341,23 @@ A decomposition of function is the interconnection between the output of child f
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationPerformance -->
 
     <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationPerformance">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Performance"/>
+                    <owl:Restriction>
+                        <owl:onProperty>
+                            <rdf:Description>
+                                <owl:inverseOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                            </rdf:Description>
+                        </owl:onProperty>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Performance"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1338,9 +1398,15 @@ A decomposition of function is the interconnection between the output of child f
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isCoupledWith"/>
                         <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
                     </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isSatisfiedBy"/>
+                        <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization"/>
+                    </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
         </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">Interface is a Description.</rdfs:comment>
     </owl:Class>
     
 
@@ -1383,6 +1449,7 @@ A decomposition of function is the interconnection between the output of child f
                 </owl:intersectionOf>
             </owl:Class>
         </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">Module is a Collection.</rdfs:comment>
         <rdfs:comment xml:lang="en">Module is a term with finer granularity compared to function. Similar to Function, a module also has input and output interfaces, linking to both resource and information. A module is not directly linked to any function unless it is involved in a configuration.
 
 A module does not consider the statelessness of function, i.e., a module allows internal state variables that takes time to stabilize, evolves over the duration of a task, etc. While a function does not consider time (for its statelessness), or timeliness of response, a module is strictly real-time and does not allow any blocking actions.</rdfs:comment>
@@ -1400,6 +1467,26 @@ A module does not consider the statelessness of function, i.e., a module allows 
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
             </owl:Restriction>
         </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ModuleConfiguration -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ModuleConfiguration">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#involves"/>
+                        <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
+        <rdfs:comment>Module configuration is a realization of the function configuration, through feasible combination of modules. The set of modules has net input that is a subset of the function input, and has combined output that contains the function output as a subset.</rdfs:comment>
     </owl:Class>
     
 
@@ -1425,14 +1512,27 @@ A module does not consider the statelessness of function, i.e., a module allows 
                         <owl:allValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Performance"/>
                     </owl:Restriction>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isMonitoredBy"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Evaluator"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty>
+                            <rdf:Description>
+                                <owl:inverseOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                            </rdf:Description>
+                        </owl:onProperty>
                         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                         <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
                     </owl:Restriction>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isMonitoredBy"/>
+                        <owl:onProperty>
+                            <rdf:Description>
+                                <owl:inverseOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                            </rdf:Description>
+                        </owl:onProperty>
                         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Evaluator"/>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization"/>
                     </owl:Restriction>
                     <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#rawPerformanceKey"/>
@@ -1453,14 +1553,7 @@ A module does not consider the statelessness of function, i.e., a module allows 
                 </owl:intersectionOf>
             </owl:Class>
         </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#PhysicalInterface -->
-
-    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#PhysicalInterface">
-        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
+        <rdfs:comment xml:lang="en">Performance is a Quality.</rdfs:comment>
     </owl:Class>
     
 
@@ -1469,11 +1562,24 @@ A module does not consider the statelessness of function, i.e., a module allows 
 
     <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#PredictedInformationPerformance">
         <owl:equivalentClass>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isPerformancePredictionOf"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationPerformance"/>
-            </owl:Restriction>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isPerformancePredictionOf"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationPerformance"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty>
+                            <rdf:Description>
+                                <owl:inverseOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                            </rdf:Description>
+                        </owl:onProperty>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationRealization"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#PredictedPerformance"/>
     </owl:Class>
@@ -1516,6 +1622,15 @@ A module does not consider the statelessness of function, i.e., a module allows 
                         <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Estimator"/>
                     </owl:Restriction>
                     <owl:Restriction>
+                        <owl:onProperty>
+                            <rdf:Description>
+                                <owl:inverseOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                            </rdf:Description>
+                        </owl:onProperty>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
                         <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#performanceValue"/>
                         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                         <owl:onDataRange>
@@ -1530,6 +1645,7 @@ A module does not consider the statelessness of function, i.e., a module allows 
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
+        <rdfs:comment xml:lang="en">Predicted performance is a quality.</rdfs:comment>
     </owl:Class>
     
 
@@ -1538,11 +1654,24 @@ A module does not consider the statelessness of function, i.e., a module allows 
 
     <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#PredictedResourceUtilization">
         <owl:equivalentClass>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isPerformancePredictionOf"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceUtilization"/>
-            </owl:Restriction>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isPerformancePredictionOf"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceUtilization"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty>
+                            <rdf:Description>
+                                <owl:inverseOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                            </rdf:Description>
+                        </owl:onProperty>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#PredictedPerformance"/>
     </owl:Class>
@@ -1551,7 +1680,23 @@ A module does not consider the statelessness of function, i.e., a module allows 
 
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization -->
 
-    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization"/>
+    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                        <owl:someValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Performance"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                        <owl:someValuesFrom rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#PredictedPerformance"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">Realization is a Situation.</rdfs:comment>
+    </owl:Class>
     
 
 
@@ -1572,23 +1717,24 @@ A module does not consider the statelessness of function, i.e., a module allows 
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface -->
 
     <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface">
-        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
-        <rdfs:subClassOf>
+        <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#describes"/>
                         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
                         <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
                     </owl:Restriction>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isBindedToResource"/>
-                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isSatisfiedBy"/>
+                        <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                         <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
             </owl:Class>
-        </rdfs:subClassOf>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
     </owl:Class>
     
 
@@ -1596,14 +1742,31 @@ A module does not consider the statelessness of function, i.e., a module allows 
     <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceUtilization -->
 
     <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceUtilization">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Performance"/>
+                    <owl:Restriction>
+                        <owl:onProperty>
+                            <rdf:Description>
+                                <owl:inverseOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                            </rdf:Description>
+                        </owl:onProperty>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Performance"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#RobotInterface -->
+
+    <owl:Class rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#RobotInterface">
+        <rdfs:subClassOf rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
     </owl:Class>
     
 
@@ -1635,25 +1798,25 @@ A module does not consider the statelessness of function, i.e., a module allows 
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
-    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F">
-        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
-    </rdf:Description>
     <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI">
         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D">
         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
     </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
     <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F">
         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV">
@@ -1671,6 +1834,12 @@ A module does not consider the statelessness of function, i.e., a module allows 
     <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#G">
         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
     </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#R">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#P">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
     <rdf:Description>
         <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ES is selected based on the type of interface and the function that the interface supports.</rdfs:comment>
@@ -1682,8 +1851,8 @@ A module does not consider the statelessness of function, i.e., a module allows 
                 <rdf:first>
                     <rdf:Description>
                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Executor"/>
-                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
                     </rdf:Description>
                 </rdf:first>
                 <rdf:rest>
@@ -1691,9 +1860,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                         <rdf:first>
                             <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
-                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#describes"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D"/>
                             </rdf:Description>
                         </rdf:first>
                         <rdf:rest>
@@ -1702,9 +1872,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                 <rdf:first>
                                     <rdf:Description>
                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executes"/>
-                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
-                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasResourceInterface"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
                                     </rdf:Description>
                                 </rdf:first>
                                 <rdf:rest>
@@ -1713,8 +1883,8 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                         <rdf:first>
                                             <rdf:Description>
                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
-                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
+                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Estimator"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
                                             </rdf:Description>
                                         </rdf:first>
                                         <rdf:rest>
@@ -1722,10 +1892,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                 <rdf:first>
                                                     <rdf:Description>
-                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInvolvedIn"/>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
                                                         <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
-                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
                                                     </rdf:Description>
                                                 </rdf:first>
                                                 <rdf:rest>
@@ -1733,9 +1902,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                         <rdf:first>
                                                             <rdf:Description>
-                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
-                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executes"/>
+                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
                                                             </rdf:Description>
                                                         </rdf:first>
                                                         <rdf:rest>
@@ -1744,9 +1914,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                 <rdf:first>
                                                                     <rdf:Description>
                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#solvesFunction"/>
-                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
-                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInvolvedIn"/>
+                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
                                                                     </rdf:Description>
                                                                 </rdf:first>
                                                                 <rdf:rest>
@@ -1754,9 +1924,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                         <rdf:first>
                                                                             <rdf:Description>
-                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface"/>
-                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
+                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesResource"/>
+                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
+                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D"/>
                                                                             </rdf:Description>
                                                                         </rdf:first>
                                                                         <rdf:rest>
@@ -1764,10 +1935,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                 <rdf:first>
                                                                                     <rdf:Description>
-                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasResourceInterface"/>
-                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
-                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
+                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
+                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
                                                                                     </rdf:Description>
                                                                                 </rdf:first>
                                                                                 <rdf:rest>
@@ -1786,9 +1956,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                 <rdf:first>
                                                                                                     <rdf:Description>
                                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
-                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
-                                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D"/>
+                                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesFunction"/>
+                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
+                                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                                                     </rdf:Description>
                                                                                                 </rdf:first>
                                                                                                 <rdf:rest>
@@ -1796,9 +1966,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                         <rdf:first>
                                                                                                             <rdf:Description>
-                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Estimator"/>
-                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
+                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#solvesFunction"/>
+                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
+                                                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                                                             </rdf:Description>
                                                                                                         </rdf:first>
                                                                                                         <rdf:rest>
@@ -1806,10 +1977,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                                 <rdf:first>
                                                                                                                     <rdf:Description>
-                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesFunction"/>
-                                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
-                                                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+                                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                                                                     </rdf:Description>
                                                                                                                 </rdf:first>
                                                                                                                 <rdf:rest>
@@ -1817,10 +1987,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                                         <rdf:first>
                                                                                                                             <rdf:Description>
-                                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesResource"/>
-                                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
-                                                                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D"/>
+                                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Executor"/>
+                                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
                                                                                                                             </rdf:Description>
                                                                                                                         </rdf:first>
                                                                                                                         <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
@@ -1858,9 +2027,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                 <rdf:first>
                     <rdf:Description>
                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesExecutor"/>
-                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
-                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isBindedToEstimator"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
+                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
                     </rdf:Description>
                 </rdf:first>
                 <rdf:rest>
@@ -1869,9 +2038,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                         <rdf:first>
                             <rdf:Description>
                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isBindedToEstimator"/>
-                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
-                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
+                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesExecutor"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
                             </rdf:Description>
                         </rdf:first>
                         <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
@@ -1891,8 +2060,8 @@ A module does not consider the statelessness of function, i.e., a module allows 
                 <rdf:first>
                     <rdf:Description>
                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Executor"/>
-                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
                     </rdf:Description>
                 </rdf:first>
                 <rdf:rest>
@@ -1900,9 +2069,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                         <rdf:first>
                             <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
-                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#describes"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D"/>
                             </rdf:Description>
                         </rdf:first>
                         <rdf:rest>
@@ -1911,9 +2081,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                 <rdf:first>
                                     <rdf:Description>
                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executes"/>
-                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
-                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#evaluatesFunction"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                     </rdf:Description>
                                 </rdf:first>
                                 <rdf:rest>
@@ -1921,9 +2091,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                         <rdf:first>
                                             <rdf:Description>
-                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
-                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasResourceInterface"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
                                             </rdf:Description>
                                         </rdf:first>
                                         <rdf:rest>
@@ -1931,10 +2102,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                 <rdf:first>
                                                     <rdf:Description>
-                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInvolvedIn"/>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
                                                         <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
-                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
                                                     </rdf:Description>
                                                 </rdf:first>
                                                 <rdf:rest>
@@ -1942,9 +2112,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                         <rdf:first>
                                                             <rdf:Description>
-                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
-                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executes"/>
+                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
                                                             </rdf:Description>
                                                         </rdf:first>
                                                         <rdf:rest>
@@ -1953,9 +2124,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                 <rdf:first>
                                                                     <rdf:Description>
                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#solvesFunction"/>
-                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
-                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInvolvedIn"/>
+                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
                                                                     </rdf:Description>
                                                                 </rdf:first>
                                                                 <rdf:rest>
@@ -1964,8 +2135,8 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                         <rdf:first>
                                                                             <rdf:Description>
                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface"/>
-                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
+                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
+                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
                                                                             </rdf:Description>
                                                                         </rdf:first>
                                                                         <rdf:rest>
@@ -1973,10 +2144,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                 <rdf:first>
                                                                                     <rdf:Description>
-                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasResourceInterface"/>
-                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
-                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
+                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
+                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D"/>
                                                                                     </rdf:Description>
                                                                                 </rdf:first>
                                                                                 <rdf:rest>
@@ -1984,9 +2154,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                         <rdf:first>
                                                                                             <rdf:Description>
-                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
-                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D"/>
+                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#solvesFunction"/>
+                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
+                                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                                             </rdf:Description>
                                                                                         </rdf:first>
                                                                                         <rdf:rest>
@@ -1994,10 +2165,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                 <rdf:first>
                                                                                                     <rdf:Description>
-                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
-                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#RI"/>
-                                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#D"/>
+                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Evaluator"/>
+                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV"/>
                                                                                                     </rdf:Description>
                                                                                                 </rdf:first>
                                                                                                 <rdf:rest>
@@ -2006,8 +2176,8 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                         <rdf:first>
                                                                                                             <rdf:Description>
                                                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Evaluator"/>
-                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV"/>
+                                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                                                             </rdf:Description>
                                                                                                         </rdf:first>
                                                                                                         <rdf:rest>
@@ -2015,10 +2185,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                                 <rdf:first>
                                                                                                                     <rdf:Description>
-                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#evaluatesFunction"/>
-                                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV"/>
-                                                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Executor"/>
+                                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
                                                                                                                     </rdf:Description>
                                                                                                                 </rdf:first>
                                                                                                                 <rdf:rest>
@@ -2100,8 +2269,8 @@ A module does not consider the statelessness of function, i.e., a module allows 
                 <rdf:first>
                     <rdf:Description>
                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Executor"/>
-                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Estimator"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
                     </rdf:Description>
                 </rdf:first>
                 <rdf:rest>
@@ -2109,9 +2278,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                         <rdf:first>
                             <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
-                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#describes"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
                             </rdf:Description>
                         </rdf:first>
                         <rdf:rest>
@@ -2119,10 +2289,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                 <rdf:first>
                                     <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executes"/>
-                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
-                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationObject"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
                                     </rdf:Description>
                                 </rdf:first>
                                 <rdf:rest>
@@ -2131,8 +2300,8 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                         <rdf:first>
                                             <rdf:Description>
                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
-                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
+                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
                                             </rdf:Description>
                                         </rdf:first>
                                         <rdf:rest>
@@ -2141,9 +2310,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                 <rdf:first>
                                                     <rdf:Description>
                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInvolvedIn"/>
-                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
-                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
+                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executes"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
                                                     </rdf:Description>
                                                 </rdf:first>
                                                 <rdf:rest>
@@ -2151,9 +2320,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                         <rdf:first>
                                                             <rdf:Description>
-                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
-                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInvolvedIn"/>
+                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
                                                             </rdf:Description>
                                                         </rdf:first>
                                                         <rdf:rest>
@@ -2161,10 +2331,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                 <rdf:first>
                                                                     <rdf:Description>
-                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#solvesFunction"/>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
                                                                         <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
-                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                     </rdf:Description>
                                                                 </rdf:first>
                                                                 <rdf:rest>
@@ -2172,9 +2341,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                         <rdf:first>
                                                                             <rdf:Description>
-                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
-                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
+                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInformationInterface"/>
+                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
                                                                             </rdf:Description>
                                                                         </rdf:first>
                                                                         <rdf:rest>
@@ -2183,9 +2353,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                 <rdf:first>
                                                                                     <rdf:Description>
                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInformationInterface"/>
-                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
-                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
+                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesInformation"/>
+                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
+                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
                                                                                     </rdf:Description>
                                                                                 </rdf:first>
                                                                                 <rdf:rest>
@@ -2193,9 +2363,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                         <rdf:first>
                                                                                             <rdf:Description>
-                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationObject"/>
-                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
+                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesFunction"/>
+                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
+                                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                                             </rdf:Description>
                                                                                         </rdf:first>
                                                                                         <rdf:rest>
@@ -2203,10 +2374,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                 <rdf:first>
                                                                                                     <rdf:Description>
-                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
+                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
                                                                                                         <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
-                                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
                                                                                                     </rdf:Description>
                                                                                                 </rdf:first>
                                                                                                 <rdf:rest>
@@ -2214,9 +2384,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                         <rdf:first>
                                                                                                             <rdf:Description>
-                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Estimator"/>
-                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
+                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#solvesFunction"/>
+                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
+                                                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                                                             </rdf:Description>
                                                                                                         </rdf:first>
                                                                                                         <rdf:rest>
@@ -2224,10 +2395,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                                 <rdf:first>
                                                                                                                     <rdf:Description>
-                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesFunction"/>
-                                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
-                                                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+                                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                                                                     </rdf:Description>
                                                                                                                 </rdf:first>
                                                                                                                 <rdf:rest>
@@ -2235,10 +2405,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                                         <rdf:first>
                                                                                                                             <rdf:Description>
-                                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesInformation"/>
-                                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
-                                                                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
+                                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Executor"/>
+                                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
                                                                                                                             </rdf:Description>
                                                                                                                         </rdf:first>
                                                                                                                         <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
@@ -2276,9 +2445,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                 <rdf:first>
                     <rdf:Description>
                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesExecutor"/>
-                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
-                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isBindedToEstimator"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
+                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
                     </rdf:Description>
                 </rdf:first>
                 <rdf:rest>
@@ -2287,9 +2456,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                         <rdf:first>
                             <rdf:Description>
                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isBindedToEstimator"/>
-                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
-                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
+                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#estimatesExecutor"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#ES"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
                             </rdf:Description>
                         </rdf:first>
                         <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
@@ -2308,9 +2477,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                 <rdf:first>
                     <rdf:Description>
-                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Executor"/>
-                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#evaluatesFunction"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV"/>
+                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                     </rdf:Description>
                 </rdf:first>
                 <rdf:rest>
@@ -2318,9 +2488,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                         <rdf:first>
                             <rdf:Description>
-                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
-                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#describes"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
                             </rdf:Description>
                         </rdf:first>
                         <rdf:rest>
@@ -2328,10 +2499,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                 <rdf:first>
                                     <rdf:Description>
-                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executes"/>
-                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
-                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationObject"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
                                     </rdf:Description>
                                 </rdf:first>
                                 <rdf:rest>
@@ -2340,8 +2510,8 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                         <rdf:first>
                                             <rdf:Description>
                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
-                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
+                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Module"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
                                             </rdf:Description>
                                         </rdf:first>
                                         <rdf:rest>
@@ -2350,9 +2520,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                 <rdf:first>
                                                     <rdf:Description>
                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInvolvedIn"/>
-                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
-                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
+                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#executes"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
+                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
                                                     </rdf:Description>
                                                 </rdf:first>
                                                 <rdf:rest>
@@ -2360,9 +2530,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                         <rdf:first>
                                                             <rdf:Description>
-                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
-                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isInvolvedIn"/>
+                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
                                                             </rdf:Description>
                                                         </rdf:first>
                                                         <rdf:rest>
@@ -2370,10 +2541,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                 <rdf:first>
                                                                     <rdf:Description>
-                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#solvesFunction"/>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Configuration"/>
                                                                         <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
-                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                     </rdf:Description>
                                                                 </rdf:first>
                                                                 <rdf:rest>
@@ -2381,9 +2551,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                         <rdf:first>
                                                                             <rdf:Description>
-                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
-                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
+                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInformationInterface"/>
+                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
+                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
                                                                             </rdf:Description>
                                                                         </rdf:first>
                                                                         <rdf:rest>
@@ -2391,10 +2562,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                 <rdf:first>
                                                                                     <rdf:Description>
-                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasInformationInterface"/>
-                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#M"/>
-                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
+                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
                                                                                     </rdf:Description>
                                                                                 </rdf:first>
                                                                                 <rdf:rest>
@@ -2402,9 +2572,10 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                         <rdf:first>
                                                                                             <rdf:Description>
-                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationObject"/>
-                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
+                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#solvesFunction"/>
+                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#C"/>
+                                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                                             </rdf:Description>
                                                                                         </rdf:first>
                                                                                         <rdf:rest>
@@ -2412,10 +2583,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                 <rdf:first>
                                                                                                     <rdf:Description>
-                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
-                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#II"/>
-                                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
+                                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Evaluator"/>
+                                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV"/>
                                                                                                     </rdf:Description>
                                                                                                 </rdf:first>
                                                                                                 <rdf:rest>
@@ -2424,8 +2594,8 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                         <rdf:first>
                                                                                                             <rdf:Description>
                                                                                                                 <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
-                                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Evaluator"/>
-                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV"/>
+                                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                                                                                                             </rdf:Description>
                                                                                                         </rdf:first>
                                                                                                         <rdf:rest>
@@ -2434,9 +2604,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                                 <rdf:first>
                                                                                                                     <rdf:Description>
                                                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#evaluatesFunction"/>
+                                                                                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#evaluatesInformation"/>
                                                                                                                         <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV"/>
-                                                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
+                                                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
                                                                                                                     </rdf:Description>
                                                                                                                 </rdf:first>
                                                                                                                 <rdf:rest>
@@ -2444,10 +2614,9 @@ A module does not consider the statelessness of function, i.e., a module allows 
                                                                                                                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
                                                                                                                         <rdf:first>
                                                                                                                             <rdf:Description>
-                                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
-                                                                                                                                <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#evaluatesInformation"/>
-                                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EV"/>
-                                                                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#IO"/>
+                                                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                                                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Executor"/>
+                                                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#EX"/>
                                                                                                                             </rdf:Description>
                                                                                                                         </rdf:first>
                                                                                                                         <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
@@ -2821,6 +2990,89 @@ A module does not consider the statelessness of function, i.e., a module allows 
                         <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasFunctionalDependency"/>
                         <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#F"/>
                         <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#G"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The performance of an interface is also the performance of the realization of that interface.</rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Perf_propagation_interface_realization</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Interface"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#I"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Realization"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#R"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isSatisfiedBy"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#I"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#R"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Performance"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#P"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#I"/>
+                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#P"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#hasQuality"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#R"/>
+                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/yang/ontologies/2022/7/untitled-ontology-4#P"/>
                     </rdf:Description>
                 </rdf:first>
                 <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>

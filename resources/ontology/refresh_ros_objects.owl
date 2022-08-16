@@ -19,6 +19,23 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout -->
+
+    <owl:ObjectProperty rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#isAbout"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Individuals
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -27,138 +44,305 @@
     
 
 
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#base_motor_driver_function -->
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_battery -->
 
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#base_motor_driver_function">
-        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
-        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_control_interface"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#battery -->
-
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#battery">
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_battery">
         <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#canbus -->
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_cpu -->
 
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#canbus">
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_cpu">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_powered_caster_wheels -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_powered_caster_wheels">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_control"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_feedback"/>
+        <refresh_module_level:hasResourceInterface rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_power"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_ram -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_ram">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_base_driver_torq -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_base_driver_torq">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cmd_torq"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_control"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_base_driver_vel -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_base_driver_vel">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cmd_vel"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_control"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_direct_to -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_direct_to">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cur_pos"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_des_pos"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cmd_vel"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_docking_action -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_docking_action">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#TopLevelFunction"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_control"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_robot_action"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_map_localization -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_map_localization">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_map"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cur_pos"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_map_semantics_resolv -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_map_semantics_resolv">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_map"/>
+        <refresh_module_level:hasInput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_semantics"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_des_pos"/>
+        <refresh_module_level:hasResourceDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_file"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_planned_navigation -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_planned_navigation">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_costmap"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cur_pos"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_des_pos"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cmd_vel"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_planner -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_planner">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_map"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_costmap"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_slam -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_slam">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cur_pos"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_map"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_static_map -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_static_map">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_map"/>
+        <refresh_module_level:hasResourceDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_file"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_teleop_torq -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_teleop_torq">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cmd_torq"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_teleop_vel -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#fcn_teleop_vel">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Function"/>
+        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cmd_vel"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cmd_torq -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cmd_torq">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cmd_vel -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cmd_vel">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_costmap -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_costmap">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cur_pos -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_cur_pos">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_des_pos -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_des_pos">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_file -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_file">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_map -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_map">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_control -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_control">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+        <refresh_module_level:isBindedToRealization rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_canbus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_feedback -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_feedback">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+        <refresh_module_level:isBindedToRealization rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_canbus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_power -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_powered_caster_wheels_power">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface"/>
+        <refresh_module_level:isAbout rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_battery"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_robot_action -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_robot_action">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#RobotInterface"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_semantics -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#if_semantics">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_batt_soc_margin -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_batt_soc_margin">
+        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource"/>
+        <refresh_module_level:isResourceProvidedBy rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_battery"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_canbus -->
+
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_canbus">
         <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationRealization"/>
         <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#cpu -->
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_cpu_free -->
 
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#cpu">
-        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#cpu_free -->
-
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#cpu_free">
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_cpu_free">
         <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource"/>
-        <refresh_module_level:isResourceProvidedBy rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#cpu"/>
+        <refresh_module_level:isResourceProvidedBy rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_cpu"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dockingActionFunction -->
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_memory_free -->
 
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dockingActionFunction">
-        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#TopLevelFunction"/>
-        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_control_interface"/>
-        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#robot_action"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#memory_free -->
-
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#memory_free">
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_memory_free">
         <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource"/>
-        <refresh_module_level:isResourceProvidedBy rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#ram"/>
+        <refresh_module_level:isResourceProvidedBy rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_ram"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#power_margin -->
+    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_power_margin -->
 
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#power_margin">
+    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#res_power_margin">
         <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource"/>
-        <refresh_module_level:isResourceProvidedBy rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#battery"/>
+        <refresh_module_level:isResourceProvidedBy rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#dev_battery"/>
     </owl:NamedIndividual>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels -->
-
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels">
-        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
-        <refresh_module_level:hasInformationDependency rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_control_interface"/>
-        <refresh_module_level:hasOutput rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_feedback_interface"/>
-        <refresh_module_level:hasResourceInterface rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_power_interface"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_control_interface -->
-
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_control_interface">
-        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
-        <refresh_module_level:isBindedToRealization rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#canbus"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_feedback_interface -->
-
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_feedback_interface">
-        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#InformationInterface"/>
-        <refresh_module_level:isBindedToRealization rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#canbus"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_power_interface -->
-
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#powered_caster_wheels_power_interface">
-        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#ResourceInterface"/>
-        <refresh_module_level:isAbout rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#battery"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#ram -->
-
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#ram">
-        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Device"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#robot_action -->
-
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#robot_action">
-        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#PhysicalInterface"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#soc_margin -->
-
-    <owl:NamedIndividual rdf:about="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#soc_margin">
-        <rdf:type rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_module_level.owl#Resource"/>
-        <refresh_module_level:isResourceProvidedBy rdf:resource="https://raw.githubusercontent.com/HaoguangYang/ReFRESH_ros/master/resources/ontology/refresh_ros_objects.owl#battery"/>
-    </owl:NamedIndividual>
-    
 </rdf:RDF>
 
 
