@@ -30,6 +30,7 @@ class TaskBehaviortreeEngine
         blackboard_ = BT::Blackboard::create();
         status_ = BT::NodeStatus::RUNNING;
         terminalStateNotified_ = false;
+        tree_ = factory_.createTreeFromText(empty_tree_xml_, blackboard_);
         guiTracker_ = new BT::PublisherZMQ(tree_);
         bt_file_ = "";
 
@@ -209,7 +210,9 @@ class TaskBehaviortreeEngine
 
     const std::string empty_tree_xml_ = R"(
         <root main_tree_to_execute = "MainTree">
-            <BehaviorTree ID="MainTree"/>
+            <BehaviorTree ID="MainTree">
+                <AlwaysSuccess name="Idle"/>
+            </BehaviorTree>
         </root>
         )";
 };

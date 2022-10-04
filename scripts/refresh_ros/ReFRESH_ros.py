@@ -30,7 +30,8 @@ import rospy
 import sys
 import time
 import numpy as np
-from ReFRESH_ros_utils import *
+from .ReFRESH_ros_utils import *
+import threading
 
 """
 Element of a thread in a ReFrESH module
